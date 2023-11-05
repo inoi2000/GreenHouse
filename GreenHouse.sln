@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.WebApi", "backend\GreenHouse.WebApi\GreenHouse.WebApi.csproj", "{74F2123E-E483-40B5-A107-419894A04824}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{513007D8-39E9-4DA5-863F-FDE408C69D18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{D5C94A3D-05F4-4B7E-8092-F9EE98ADF7B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{4987FEBF-470B-41DE-AA87-F205ADE7FFE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{EDA51615-2A11-41AA-A0C6-14200757F695}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.Domain", "backend\GreenHouse.Domain\GreenHouse.Domain.csproj", "{E9F03D6C-9AD2-47EE-AF21-85416E75FBAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.HttpModels", "shared\GreenHouse.HttpModels\GreenHouse.HttpModels.csproj", "{807EFE20-F1AB-4B7E-8CA1-7F5B7E95AB12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74F2123E-E483-40B5-A107-419894A04824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74F2123E-E483-40B5-A107-419894A04824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74F2123E-E483-40B5-A107-419894A04824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74F2123E-E483-40B5-A107-419894A04824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9F03D6C-9AD2-47EE-AF21-85416E75FBAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9F03D6C-9AD2-47EE-AF21-85416E75FBAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9F03D6C-9AD2-47EE-AF21-85416E75FBAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9F03D6C-9AD2-47EE-AF21-85416E75FBAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{807EFE20-F1AB-4B7E-8CA1-7F5B7E95AB12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{807EFE20-F1AB-4B7E-8CA1-7F5B7E95AB12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{807EFE20-F1AB-4B7E-8CA1-7F5B7E95AB12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{807EFE20-F1AB-4B7E-8CA1-7F5B7E95AB12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{74F2123E-E483-40B5-A107-419894A04824} = {513007D8-39E9-4DA5-863F-FDE408C69D18}
+		{EDA51615-2A11-41AA-A0C6-14200757F695} = {513007D8-39E9-4DA5-863F-FDE408C69D18}
+		{E9F03D6C-9AD2-47EE-AF21-85416E75FBAA} = {513007D8-39E9-4DA5-863F-FDE408C69D18}
+		{807EFE20-F1AB-4B7E-8CA1-7F5B7E95AB12} = {4987FEBF-470B-41DE-AA87-F205ADE7FFE7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {796FD543-3E22-44FD-827F-517C0E4D5FE5}
+	EndGlobalSection
+EndGlobal
