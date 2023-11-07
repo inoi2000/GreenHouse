@@ -7,10 +7,6 @@
         private DateTime _dateTimeExit;
         private string _wishes;
 
-
-
-
-
         public Guid Id { get => _id; init => _id = value; }
         public DateTime DateTimeEntry
         {
@@ -44,5 +40,7 @@
                 _wishes = value;
             }
         }
+        public Account Account { get; private set; }
+        public Appartment Appartment { get; private set; }
     }
 }

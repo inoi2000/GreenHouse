@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GreenHouse.Domain.Entities
 {
@@ -9,7 +8,7 @@ namespace GreenHouse.Domain.Entities
         private string _name;
         private string _email;
         public string _phoneNumber;
-        public ConcurrentBag<Order> Orders { get; set; }
+        public List<Order> Orders { get; set; }
 
         public Guid Id { get => _id; init => _id = value; }
         public string Name

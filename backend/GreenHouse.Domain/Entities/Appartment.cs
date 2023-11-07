@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-
+﻿
 namespace GreenHouse.Domain.Entities
 {
     public class Appartment : IEntity
@@ -13,19 +12,11 @@ namespace GreenHouse.Domain.Entities
         private double _square;
         private decimal _bail;
         private decimal _price;
-        public ConcurrentBag<DateTime> BookedDays { get; init; }
-        public ConcurrentBag<Uri> Photos { get; init; }
-        public ConcurrentBag<Rule> Rules { get; init; }
-        public ConcurrentBag<Convenience> Conveniences { get; init; }
-
-        public Appartment()
-        {
-            Id = Guid.NewGuid();
-            BookedDays = new ConcurrentBag<DateTime>();
-            Photos = new ConcurrentBag<Uri>();
-            Rules = new ConcurrentBag<Rule>();
-            Conveniences = new ConcurrentBag<Convenience>();
-        }
+        public List<BookedDateTime> BookedDays { get; init; }
+        public List<Rule> Rules { get; init; }
+        public List<Convenience> Conveniences { get; init; }
+        public List<ImageUri> Photos { get; init; }
+        public List<Order> Orders { get; init; }
 
         public Guid Id { get => _id; init => _id = value; }
         public City City { get => _city; init => _city = value; }

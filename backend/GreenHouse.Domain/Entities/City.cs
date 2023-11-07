@@ -6,7 +6,7 @@ namespace GreenHouse.Domain.Entities
     {
         private readonly Guid _id;
         private string _name;
-        public ConcurrentBag<Appartment> Appartments { get; set; }
+        public List<Appartment> Appartments { get; set; }
 
 
         public Guid Id { get => _id; init => _id = value; }
