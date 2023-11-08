@@ -6,7 +6,7 @@ namespace GreenHouse.Data.EntityFramework.Reposirories
 {
     public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
-        private readonly AppDbContext _dbContext;
+        protected readonly AppDbContext _dbContext;
         public EfRepository(AppDbContext dbContext)
         {
             if (dbContext is null) { throw new ArgumentNullException(nameof(dbContext)); }

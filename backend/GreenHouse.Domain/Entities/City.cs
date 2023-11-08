@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-
-namespace GreenHouse.Domain.Entities
+﻿namespace GreenHouse.Domain.Entities
 {
     public class City : IEntity
     {
@@ -8,6 +6,14 @@ namespace GreenHouse.Domain.Entities
         private string _name;
         public List<Appartment> Appartments { get; set; }
 
+        public City(Guid id, string name)
+        {
+            _id = id;
+            _name = name;
+            Appartments = new List<Appartment>();
+        }
+
+        public City(string name) : this(Guid.NewGuid(), name) { }
 
         public Guid Id { get => _id; init => _id = value; }
         public string Name
