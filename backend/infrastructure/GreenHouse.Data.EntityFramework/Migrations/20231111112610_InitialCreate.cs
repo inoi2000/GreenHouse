@@ -38,10 +38,27 @@ namespace GreenHouse.Data.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Rules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsChildrenAllowed = table.Column<bool>(type: "bit", nullable: false),
+                    IsPetsAllowed = table.Column<bool>(type: "bit", nullable: false),
+                    IsSmokingAllowed = table.Column<bool>(type: "bit", nullable: false),
+                    IsPartyAllowed = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rules", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Appartments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Photos = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RulesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Conveniences = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CityId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -61,42 +78,12 @@ namespace GreenHouse.Data.EntityFramework.Migrations
                         principalTable: "Cities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookedDateTimes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AppartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookedDateTimes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BookedDateTimes_Appartments_AppartmentId",
-                        column: x => x.AppartmentId,
-                        principalTable: "Appartments",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ImageUris",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Uri = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AppartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImageUris", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ImageUris_Appartments_AppartmentId",
-                        column: x => x.AppartmentId,
-                        principalTable: "Appartments",
-                        principalColumn: "Id");
+                        name: "FK_Appartments_Rules_RulesId",
+                        column: x => x.RulesId,
+                        principalTable: "Rules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,41 +114,15 @@ namespace GreenHouse.Data.EntityFramework.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Rules",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsChildrenAllowed = table.Column<bool>(type: "bit", nullable: false),
-                    IsPetsAllowed = table.Column<bool>(type: "bit", nullable: false),
-                    IsSmokingAllowed = table.Column<bool>(type: "bit", nullable: false),
-                    IsPartyAllowed = table.Column<bool>(type: "bit", nullable: false),
-                    AppartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Rules_Appartments_AppartmentId",
-                        column: x => x.AppartmentId,
-                        principalTable: "Appartments",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Appartments_CityId",
                 table: "Appartments",
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookedDateTimes_AppartmentId",
-                table: "BookedDateTimes",
-                column: "AppartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ImageUris_AppartmentId",
-                table: "ImageUris",
-                column: "AppartmentId");
+                name: "IX_Appartments_RulesId",
+                table: "Appartments",
+                column: "RulesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_AccountId",
@@ -172,27 +133,13 @@ namespace GreenHouse.Data.EntityFramework.Migrations
                 name: "IX_Orders_AppartmentId",
                 table: "Orders",
                 column: "AppartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Rules_AppartmentId",
-                table: "Rules",
-                column: "AppartmentId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BookedDateTimes");
-
-            migrationBuilder.DropTable(
-                name: "ImageUris");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "Rules");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
@@ -202,6 +149,9 @@ namespace GreenHouse.Data.EntityFramework.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "Rules");
         }
     }
 }

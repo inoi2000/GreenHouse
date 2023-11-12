@@ -13,7 +13,7 @@
             get => _dateTimeEntry;
             set
             {
-                if (_dateTimeEntry < DateTime.Now)
+                if (value < DateTime.Now)
                 {
                     throw new ArgumentException("The value cannot be less than the current time", nameof(value));
                 }
@@ -25,7 +25,7 @@
             get => _dateTimeExit;
             set
             {
-                if (_dateTimeExit < DateTime.Now)
+                if (value < DateTime.Now)
                 {
                     throw new ArgumentException("The value cannot be less than the current time", nameof(value));
                 }

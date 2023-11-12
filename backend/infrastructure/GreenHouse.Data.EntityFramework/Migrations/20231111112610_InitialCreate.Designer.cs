@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GreenHouse.Data.EntityFramework.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231107075300_InitialCreate")]
+    [Migration("20231111112610_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -77,8 +77,15 @@ namespace GreenHouse.Data.EntityFramework.Migrations
                     b.Property<int>("NumberOfSlippingPlaces")
                         .HasColumnType("int");
 
+                    b.Property<string>("Photos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("RulesId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Square")
                         .HasColumnType("float");
@@ -87,26 +94,9 @@ namespace GreenHouse.Data.EntityFramework.Migrations
 
                     b.HasIndex("CityId");
 
+                    b.HasIndex("RulesId");
+
                     b.ToTable("Appartments");
-                });
-
-            modelBuilder.Entity("GreenHouse.Domain.Entities.BookedDateTime", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AppartmentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppartmentId");
-
-                    b.ToTable("BookedDateTimes");
                 });
 
             modelBuilder.Entity("GreenHouse.Domain.Entities.City", b =>
@@ -122,26 +112,6 @@ namespace GreenHouse.Data.EntityFramework.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("GreenHouse.Domain.Entities.ImageUri", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AppartmentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Uri")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppartmentId");
-
-                    b.ToTable("ImageUris");
                 });
 
             modelBuilder.Entity("GreenHouse.Domain.Entities.Order", b =>
@@ -175,13 +145,10 @@ namespace GreenHouse.Data.EntityFramework.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("GreenHouse.Domain.Entities.Rule", b =>
+            modelBuilder.Entity("GreenHouse.Domain.Entities.RulesList", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("AppartmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsChildrenAllowed")
@@ -198,34 +165,24 @@ namespace GreenHouse.Data.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppartmentId");
-
                     b.ToTable("Rules");
                 });
 
             modelBuilder.Entity("GreenHouse.Domain.Entities.Appartment", b =>
                 {
-                    b.HasOne("GreenHouse.Domain.Entities.City", "City")
+                    b.HasOne("GreenHouse.Domain.Entities.City", null)
                         .WithMany("Appartments")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("City");
-                });
+                    b.HasOne("GreenHouse.Domain.Entities.RulesList", "Rules")
+                        .WithMany()
+                        .HasForeignKey("RulesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("GreenHouse.Domain.Entities.BookedDateTime", b =>
-                {
-                    b.HasOne("GreenHouse.Domain.Entities.Appartment", null)
-                        .WithMany("BookedDays")
-                        .HasForeignKey("AppartmentId");
-                });
-
-            modelBuilder.Entity("GreenHouse.Domain.Entities.ImageUri", b =>
-                {
-                    b.HasOne("GreenHouse.Domain.Entities.Appartment", null)
-                        .WithMany("Photos")
-                        .HasForeignKey("AppartmentId");
+                    b.Navigation("Rules");
                 });
 
             modelBuilder.Entity("GreenHouse.Domain.Entities.Order", b =>
@@ -247,13 +204,6 @@ namespace GreenHouse.Data.EntityFramework.Migrations
                     b.Navigation("Appartment");
                 });
 
-            modelBuilder.Entity("GreenHouse.Domain.Entities.Rule", b =>
-                {
-                    b.HasOne("GreenHouse.Domain.Entities.Appartment", null)
-                        .WithMany("Rules")
-                        .HasForeignKey("AppartmentId");
-                });
-
             modelBuilder.Entity("GreenHouse.Domain.Entities.Account", b =>
                 {
                     b.Navigation("Orders");
@@ -261,13 +211,7 @@ namespace GreenHouse.Data.EntityFramework.Migrations
 
             modelBuilder.Entity("GreenHouse.Domain.Entities.Appartment", b =>
                 {
-                    b.Navigation("BookedDays");
-
                     b.Navigation("Orders");
-
-                    b.Navigation("Photos");
-
-                    b.Navigation("Rules");
                 });
 
             modelBuilder.Entity("GreenHouse.Domain.Entities.City", b =>

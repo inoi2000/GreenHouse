@@ -9,5 +9,6 @@ namespace GreenHouse.Domain.Interfaces
 {
     public interface IAppartmentRepository : IRepository<Appartment>
     {
+        Task<IReadOnlyList<Appartment>> GetByCityId(Guid cityId, CancellationToken cancellationToken);
     }
 }

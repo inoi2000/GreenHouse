@@ -15,51 +15,51 @@ namespace GreenHouse.Data.EntityFramework.Reposirories
 
         protected DbSet<TEntity> Entities => _dbContext.Set<TEntity>();
 
-        public virtual Task<TEntity> GetById(Guid Id, CancellationToken token)
-            => Entities.FirstAsync(it => it.Id == Id, token);
+        public virtual Task<TEntity> GetById(Guid Id, CancellationToken cancellationToken)
+            => Entities.FirstAsync(it => it.Id == Id, cancellationToken);
 
-        public virtual async Task<IReadOnlyList<TEntity>> GetAll(CancellationToken token)
-            => await Entities.ToListAsync(token);
+        public virtual async Task<IReadOnlyList<TEntity>> GetAll(CancellationToken cancellationToken)
+            => await Entities.ToListAsync(cancellationToken);
 
-        public virtual async Task Add(TEntity entity, CancellationToken token)
+        public virtual async Task Add(TEntity entity, CancellationToken cancellationToken)
         {
             if (entity is null) { throw new ArgumentNullException(nameof(entity)); }
 
-            await Entities.AddAsync(entity, token);
-            await _dbContext.SaveChangesAsync(token);
+            await Entities.AddAsync(entity, cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public virtual async Task AddUnsafe(TEntity entity, CancellationToken token)
+        public virtual async Task AddUnsafe(TEntity entity, CancellationToken cancellationToken)
         {
             if (entity is null) { throw new ArgumentNullException(nameof(entity)); }
 
-            await Entities.AddAsync(entity, token);
+            await Entities.AddAsync(entity, cancellationToken);
         }
 
-        public virtual async Task Update(TEntity entity, CancellationToken token)
-        {
-            if (entity is null) { throw new ArgumentNullException(nameof(entity)); }
-
-            _dbContext.Entry(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync(token);
-        }
-
-        public virtual async Task UpdateUnsafe(TEntity entity, CancellationToken token)
+        public virtual async Task Update(TEntity entity, CancellationToken cancellationToken)
         {
             if (entity is null) { throw new ArgumentNullException(nameof(entity)); }
 
             _dbContext.Entry(entity).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public virtual async Task Delete(Guid id, CancellationToken token)
+        public virtual async Task UpdateUnsafe(TEntity entity, CancellationToken cancellationToken)
         {
-            Entities.Remove(await GetById(id, token));
-            await _dbContext.SaveChangesAsync(token);
+            if (entity is null) { throw new ArgumentNullException(nameof(entity)); }
+
+            _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        public virtual async Task DeleteUnsafe(Guid id, CancellationToken token)
+        public virtual async Task Delete(Guid id, CancellationToken cancellationToken)
         {
-            Entities.Remove(await GetById(id, token));
+            Entities.Remove(await GetById(id, cancellationToken));
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        public virtual async Task DeleteUnsafe(Guid id, CancellationToken cancellationToken)
+        {
+            Entities.Remove(await GetById(id, cancellationToken));
         }
     }
 }
