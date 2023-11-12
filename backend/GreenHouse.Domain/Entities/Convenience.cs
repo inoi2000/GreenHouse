@@ -8,5 +8,7 @@ namespace GreenHouse.Domain.Entities
 {
     public enum Convenience
     {
+        WiFi,
+        Полотенца
     }
 }

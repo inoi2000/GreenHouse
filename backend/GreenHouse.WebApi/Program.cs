@@ -1,4 +1,7 @@
 using GreenHouse.Data.EntityFramework;
+using GreenHouse.Data.EntityFramework.Reposirories;
+using GreenHouse.Domain.Interfaces;
+using GreenHouse.WebApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace GreenHouse.WebApi
@@ -18,6 +21,11 @@ namespace GreenHouse.WebApi
 
             string connection = builder.Configuration.GetConnectionString("DefaultConnection")!;
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            builder.Services.AddScoped<ICityRepository, CityRepositoryEf>();
+            builder.Services.AddScoped<IAppartmentRepository, AppartmentRepositoryEf>();
+            builder.Services.AddScoped<AccountService>();
 
             var app = builder.Build();
 
