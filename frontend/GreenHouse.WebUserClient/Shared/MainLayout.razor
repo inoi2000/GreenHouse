@@ -1,0 +1,124 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="CustomTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1" Style="opacity:90%;">
+        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+            <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" Color="Color.Primary" OnClick="@((e) => DrawerToggle())" />
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            <MudStack Spacing="1" Class="mt-2">
+                @*<MudIconButton Icon="images/logo.ico"></MudIconButton>*@
+                <MudImage Height="30" Width="30" ObjectPosition="ObjectPosition.Center" Class="mx-auto" Src="images/logo.png" Alt="not found" Elevation="0" />
+                <MudText Style="font-family:Gilroy; font-weight:300">Green House</MudText>
+            </MudStack>
+            <MudToolBar>
+                <MudButton Href="/" Variant="Variant.Text" Class="mx-2">Главная</MudButton>
+                <MudButton Href="counter" Variant="Variant.Text" Class="mx-2">Гостям</MudButton>
+                <MudButton Href="fetchdata" Variant="Variant.Text" Class="mx-2">Сотрудничество</MudButton>
+                <MudButton Href="fetchdata" Variant="Variant.Text" Class="mx-2">О нас</MudButton>
+            </MudToolBar>
+        </MudHidden>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.Instagram" Color="Color.Primary"></MudIconButton>
+        <MudIconButton Icon="@Icons.Custom.Brands.Telegram" Color="Color.Primary"></MudIconButton>
+        <MudIconButton Icon="@Icons.Custom.Brands.WhatsApp" Color="Color.Primary"></MudIconButton>
+        <MudIconButton Icon="@Icons.Custom.Brands.YouTube" Color="Color.Primary"></MudIconButton>
+        @*<MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Link="https://mudblazor.com/" Target="_blank" Color="Color.Primary" />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank" Color="Color.Primary" />*@
+        <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+            <MudFab Size="Size.Small" Label="Контакты" Color="Color.Secondary" DisableElevation="true" Class="ms-4" />
+        </MudHidden>
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">Green House</MudText>
+        </MudDrawerHeader>
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+    <footer style="background-color:#004D40; padding-top:30px; margin-top:100px;">
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+            <MudGrid Justify="Justify.SpaceAround" Spacing="3">
+                <MudItem xs="11" sm="5" md="3" lg="3" xl="2" xxl="2">
+                    <MudStack>
+                        <MudImage Height="50" Width="50" ObjectPosition="ObjectPosition.Center" Class="mx-auto" Src="images/logoWhite.svg" Alt="not found" Elevation="0" />
+                        <MudText Typo="Typo.h5" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">Green House</MudText>
+                        <MudText Typo="Typo.body1" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">© 2019 - 2023</MudText>
+                        <MudText Typo="Typo.body1" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">ИП  -------------------------</MudText>
+                        <MudText Typo="Typo.body1" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">ИНН: ------------------------</MudText>
+                        <MudText Typo="Typo.body1" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">Адрес: ----------------------</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="11" sm="5" md="5" lg="4" xl="4" xxl="4" Class="d-flex justify-content-around mt-5">
+                    <MudStack>
+                        <MudText Typo="Typo.body1" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">Остались вопросы?</MudText>
+                        <MudText Typo="Typo.body1" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">Свяжитесь с нами!</MudText>
+                        <MudText Typo="Typo.body1" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">8 846 231 65 02</MudText>
+                        <MudText Typo="Typo.body1" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">8 (927) 697 71 02</MudText>
+                        <MudText Typo="Typo.body1" Style="font-family:Gilroy; font-weight:300" Color="Color.Tertiary">
+                            Если есть вопросы, задайте их нашему менеджеру.
+                            Мы будем рады ответить на все вопросы
+                        </MudText>
+                    </MudStack>
+                    <MudStack>
+                        <MudFab StartIcon="@Icons.Custom.Brands.Instagram" Size="Size.Small" Label="Instagram" Color="Color.Secondary" DisableElevation="true" />
+                        <MudFab StartIcon="@Icons.Custom.Brands.Telegram" Size="Size.Small" Label="Telegram" Color="Color.Secondary" DisableElevation="true" />
+                        <MudFab StartIcon="@Icons.Custom.Brands.WhatsApp" Size="Size.Small" Label="WhatsApp" Color="Color.Secondary" DisableElevation="true" />
+                        <MudFab StartIcon="@Icons.Custom.Brands.YouTube" Size="Size.Small" Label="YouTube" Color="Color.Secondary" DisableElevation="true" />
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        </MudContainer>
+    </footer>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = false;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    MudTheme CustomTheme = new MudTheme()
+    {
+        Palette = new PaletteLight()
+            {
+                Primary = Colors.Teal.Darken4,
+                //Primary = Colors.DeepPurple.Darken2,
+                //Primary = Colors.Orange.Accent4,
+
+                Secondary = Colors.Grey.Darken1,
+                Tertiary = Colors.Shades.White,
+                AppbarBackground = Colors.Shades.White,
+                AppbarText = Colors.Grey.Darken4,
+                Dark = Colors.Grey.Darken4,
+                Background = Colors.Grey.Lighten5,
+                //Background = Colors.Grey.Darken4,
+            },
+        PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Blue.Lighten1
+            },
+
+        LayoutProperties = new LayoutProperties()
+        {
+            DrawerWidthLeft = "260px",
+            DrawerWidthRight = "300px"
+        },
+
+        Typography = new Typography()
+        {
+            Default = new Default()
+            {
+                FontFamily = new[] { "Poppins", "Helvetica", "Actor", "sans-serif" }
+            }
+        }
+    };
+}

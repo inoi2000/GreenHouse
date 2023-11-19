@@ -1,0 +1,24 @@
+﻿@page "/city/{Id:guid}"
+
+<PageTitle>Counter</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudStack>
+        @for (int i = 0; i < 8; i++)
+        {
+            <MudPaper Elevation="0">
+                <MudCarousel Style="height:650px" ShowArrows="true" ShowBullets="false" BulletsColor="Color.Secondary" EnableSwipeGesture="true" AutoCycle="false" TData="object">
+                    <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
+                        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src="https://fikiwiki.com/uploads/posts/2022-02/1645034893_1-fikiwiki-com-p-kartinki-kvartir-1.jpg" Alt="not found" Elevation="0" />
+                    </MudCarouselItem>
+                    <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
+                        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src="https://mykaleidoscope.ru/uploads/posts/2020-02/1581591746_48-p-kvartiri-studii-v-bezhevikh-tonakh-68.jpg" Alt="not found" Elevation="0" />
+                    </MudCarouselItem>
+                    <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
+                        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src="https://u-f.ru/sites/default/files/3_669.jpg" Alt="not found" Elevation="0" />
+                    </MudCarouselItem>
+                </MudCarousel>
+            </MudPaper>
+        }   
+    </MudStack>
+</MudContainer>

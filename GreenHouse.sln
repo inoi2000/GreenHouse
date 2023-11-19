@@ -13,13 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{4987FE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{EDA51615-2A11-41AA-A0C6-14200757F695}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.Domain", "backend\GreenHouse.Domain\GreenHouse.Domain.csproj", "{E9F03D6C-9AD2-47EE-AF21-85416E75FBAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.Domain", "backend\GreenHouse.Domain\GreenHouse.Domain.csproj", "{E9F03D6C-9AD2-47EE-AF21-85416E75FBAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.HttpModels", "shared\GreenHouse.HttpModels\GreenHouse.HttpModels.csproj", "{807EFE20-F1AB-4B7E-8CA1-7F5B7E95AB12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.HttpModels", "shared\GreenHouse.HttpModels\GreenHouse.HttpModels.csproj", "{807EFE20-F1AB-4B7E-8CA1-7F5B7E95AB12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityPasswordHasherLib", "backend\infrastructure\IdentityPasswordHasherLib\IdentityPasswordHasherLib.csproj", "{5BD981F3-0545-4FF0-8F85-3596FB495FBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityPasswordHasherLib", "backend\infrastructure\IdentityPasswordHasherLib\IdentityPasswordHasherLib.csproj", "{5BD981F3-0545-4FF0-8F85-3596FB495FBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.Data.EntityFramework", "backend\infrastructure\GreenHouse.Data.EntityFramework\GreenHouse.Data.EntityFramework.csproj", "{41034A72-99AF-45B6-A9E7-6A8446ED075B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.Data.EntityFramework", "backend\infrastructure\GreenHouse.Data.EntityFramework\GreenHouse.Data.EntityFramework.csproj", "{41034A72-99AF-45B6-A9E7-6A8446ED075B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.WebUserClient", "frontend\GreenHouse.WebUserClient\GreenHouse.WebUserClient.csproj", "{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{41034A72-99AF-45B6-A9E7-6A8446ED075B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41034A72-99AF-45B6-A9E7-6A8446ED075B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41034A72-99AF-45B6-A9E7-6A8446ED075B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{807EFE20-F1AB-4B7E-8CA1-7F5B7E95AB12} = {4987FEBF-470B-41DE-AA87-F205ADE7FFE7}
 		{5BD981F3-0545-4FF0-8F85-3596FB495FBE} = {EDA51615-2A11-41AA-A0C6-14200757F695}
 		{41034A72-99AF-45B6-A9E7-6A8446ED075B} = {EDA51615-2A11-41AA-A0C6-14200757F695}
+		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9} = {D5C94A3D-05F4-4B7E-8092-F9EE98ADF7B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {796FD543-3E22-44FD-827F-517C0E4D5FE5}
