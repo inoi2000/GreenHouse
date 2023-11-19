@@ -19,6 +19,8 @@ namespace GreenHouse.WebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors();
+
             string connection = builder.Configuration.GetConnectionString("DefaultConnection")!;
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
@@ -42,6 +44,13 @@ namespace GreenHouse.WebApi
 
             app.UseAuthorization();
 
+            app.UseCors(policy =>
+            {
+                policy
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin();
+            });
 
             app.MapControllers();
 

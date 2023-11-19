@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityPasswordHasherLib",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.Data.EntityFramework", "backend\infrastructure\GreenHouse.Data.EntityFramework\GreenHouse.Data.EntityFramework.csproj", "{41034A72-99AF-45B6-A9E7-6A8446ED075B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.WebUserClient", "frontend\GreenHouse.WebUserClient\GreenHouse.WebUserClient.csproj", "{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.WebUserClient", "frontend\GreenHouse.WebUserClient\GreenHouse.WebUserClient.csproj", "{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.HttpApiClient", "frontend\GreenHouse.HttpClient\GreenHouse.HttpApiClient.csproj", "{F0EBE8FF-81FA-4850-8182-B56EB6D8DFD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0EBE8FF-81FA-4850-8182-B56EB6D8DFD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0EBE8FF-81FA-4850-8182-B56EB6D8DFD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0EBE8FF-81FA-4850-8182-B56EB6D8DFD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0EBE8FF-81FA-4850-8182-B56EB6D8DFD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +71,7 @@ Global
 		{5BD981F3-0545-4FF0-8F85-3596FB495FBE} = {EDA51615-2A11-41AA-A0C6-14200757F695}
 		{41034A72-99AF-45B6-A9E7-6A8446ED075B} = {EDA51615-2A11-41AA-A0C6-14200757F695}
 		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9} = {D5C94A3D-05F4-4B7E-8092-F9EE98ADF7B7}
+		{F0EBE8FF-81FA-4850-8182-B56EB6D8DFD8} = {D5C94A3D-05F4-4B7E-8092-F9EE98ADF7B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {796FD543-3E22-44FD-827F-517C0E4D5FE5}

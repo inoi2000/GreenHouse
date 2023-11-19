@@ -12,5 +12,7 @@
         }
 
         public CityResponse(string name) : this(Guid.NewGuid(), name) { }
+
+        public CityResponse() { }
     }
 }

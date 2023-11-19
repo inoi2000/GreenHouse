@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inherits AppComponentBase
 
 <PageTitle>Главная</PageTitle>
 
@@ -42,19 +43,27 @@
     <MudStack Style="margin-left:auto; margin-right:auto;">
         <MudText Style="font-family:Gilroy; font-weight:300; width:100%; text-align:center; margin-top:70px; margin-bottom:-10px;" Typo="Typo.h3" GutterBottom="true" Color="Color.Dark">ВЫБОР ГОРОДА</MudText>
         <MudText Style="font-family:Gilroy; font-weight:bold; width:100%; text-align:center;" Typo="Typo.subtitle1" GutterBottom="true" Color="Color.Primary">выберети город заселения</MudText>
-        <MudGrid Justify="Justify.Center" Spacing="3">
-            @for(int i = 0; i < 8; i++)
-            {
-                <MudItem xs="11" sm="5" md="3" lg="3" xl="3" xxl="3">
-                    <MudPaper Style="background-image: url('images/orenburg.png'); background-size:cover;" Class="px-3 py-3" Width="100%" Height="250px" Elevation="1">
-                        <MudChip Color="Color.Primary" Style="margin-bottom:135px; opacity:83%;">
-                            <MudText Typo="Typo.subtitle2" Color="Color.Tertiary" Style="font-family:Inter; font-weight:500; font-size:12px;">34 варианта</MudText>
-                        </MudChip>
-                        <MudText Typo="Typo.h5" Color="Color.Tertiary" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:32px;">Оренбург</MudText>
-                    </MudPaper>
-                </MudItem>
-            }            
-        </MudGrid>
+        @if(Cities is null)
+        {
+            
+        }
+        else
+        {
+            <MudGrid Justify="Justify.Center" Spacing="3">
+                @for (int i = 0; i < Cities.Count; i++)
+                {
+                    <MudItem xs="11" sm="5" md="3" lg="3" xl="3" xxl="3">
+                        <MudPaper Style="background-image: url('images/orenburg.png'); background-size:cover;" Class="px-3 py-3" Width="100%" Height="250px" Elevation="1">
+                            <MudChip Color="Color.Primary" Style="margin-bottom:135px; opacity:83%;">
+                                <MudText Typo="Typo.subtitle2" Color="Color.Tertiary" Style="font-family:Inter; font-weight:500; font-size:12px;">34 варианта</MudText>
+                            </MudChip>
+                            <MudText Typo="Typo.h5" Color="Color.Tertiary" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:32px;">Оренбург</MudText>
+                        </MudPaper>
+                    </MudItem>
+                }            
+            </MudGrid>
+        }
+        
 
         <MudText Style="font-family:Gilroy; font-weight:300; width:100%; text-align:center; margin-top:70px; margin-bottom:-10px;" Typo="Typo.h3" GutterBottom="true" Color="Color.Dark">GREEN HOUSE</MudText>
         <MudText Style="font-family:Gilroy; font-weight:bold; width:100%; text-align:center;" Typo="Typo.subtitle1" GutterBottom="true" Color="Color.Primary">лучший сервис бронирования</MudText>
