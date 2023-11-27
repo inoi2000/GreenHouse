@@ -1,4 +1,5 @@
-﻿using GreenHouse.HttpModels.Responses;
+﻿using GreenHouse.HttpModels.Requests;
+using GreenHouse.HttpModels.Responses;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -26,7 +27,7 @@ namespace GreenHouse.HttpApiClient
             }
         }
 
-        public async Task<IReadOnlyList<CityResponse>> GetAllCities(CancellationToken cancellationToken)
+        public async Task<IReadOnlyList<CityResponse>> GetAllCitiesAsync(CancellationToken cancellationToken)
         {
             var citiesTask = _httpClient.GetFromJsonAsync<IReadOnlyList<CityResponse>>("cities/get_cities", cancellationToken);
             if (citiesTask is null)
@@ -39,6 +40,25 @@ namespace GreenHouse.HttpApiClient
                 throw new InvalidOperationException("The server returned null cities");
             }
             return cities;
+        }
+
+        public async Task<CityResponse> GetCityByIdAsync(Guid Id, CancellationToken cancellationToken)
+        {
+            var city = await _httpClient.GetFromJsonAsync<CityResponse>($"cities/get_city?Id={Id}", cancellationToken);
+            if (city is null) { throw new InvalidOperationException("The server returned null city"); }
+            return city;
+        }
+
+        public async Task AddCity(CityRequest cityRequest, CancellationToken cancellationToken)
+        {
+            using var response = await _httpClient.PostAsJsonAsync("cities/add_city", cityRequest, cancellationToken);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task DeleteCity(Guid Id, CancellationToken cancellationToken)
+        {
+            using var response = await _httpClient.DeleteAsync("cities/delete_city?Id={Id}", cancellationToken);
+            response.EnsureSuccessStatusCode();
         }
     }
 }

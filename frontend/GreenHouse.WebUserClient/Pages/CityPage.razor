@@ -1,25 +1,83 @@
 ﻿@page "/city/{Id:guid}"
+@using GreenHouse.WebUserClient.Services.Extentions;
 @inherits AppComponentBase
 
 <PageTitle>Counter</PageTitle>
 
-<MudContainer MaxWidth="MaxWidth.Large">
-    <MudStack>
-        @for (int i = 0; i < 8; i++)
-        {
-            <MudPaper Elevation="0">
-                <MudCarousel Style="height:650px" ShowArrows="true" ShowBullets="false" BulletsColor="Color.Secondary" EnableSwipeGesture="true" AutoCycle="false" TData="object">
-                    <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
-                        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src="https://fikiwiki.com/uploads/posts/2022-02/1645034893_1-fikiwiki-com-p-kartinki-kvartir-1.jpg" Alt="not found" Elevation="0" />
-                    </MudCarouselItem>
-                    <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
-                        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src="https://mykaleidoscope.ru/uploads/posts/2020-02/1581591746_48-p-kvartiri-studii-v-bezhevikh-tonakh-68.jpg" Alt="not found" Elevation="0" />
-                    </MudCarouselItem>
-                    <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
-                        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src="https://u-f.ru/sites/default/files/3_669.jpg" Alt="not found" Elevation="0" />
-                    </MudCarouselItem>
-                </MudCarousel>
-            </MudPaper>
-        }   
+@if(City != null)
+{
+    <MudStack Class="mud-width-full absolute z-20" Style="margin-left: auto; margin-right: auto; margin-top:70px; left: 0; right: 0; text-align: center;">
+        <MudText Style="font-family:Gilroy;" Typo="Typo.h4" GutterBottom="true" Color="Color.Tertiary">Легко снять - комфортно жить!</MudText>
+        <MudText Style="font-family:Gilroy; font-weight:300" Typo="Typo.h3" GutterBottom="true" Color="Color.Tertiary">@($"Квартиры посуточно в {GetCityName()}")</MudText>
+        <MudText Style="font-family:Gilroy;" Typo="Typo.h5" GutterBottom="true" Color="Color.Tertiary">На нашем сайте вы можите найти подходящий вариант по выгодной цене</MudText>
     </MudStack>
+    <div class="mud-width-full absolute z-10" style="margin-left: auto; margin-right: auto; left: 0; right: 0; text-align: center; height:450px;  background-color:black; opacity:34%;"/>
+    <MudImage Src=@(State.Host + "Images/cities/" + City.ImagePath) ObjectFit="ObjectFit.Cover" Height="450" Alt="not found" Elevation="25" Class="mud-width-full relative z-0"/>
+}
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    @if (City != null)
+    {
+        <MudStack Style="margin-top:30px;" Justify="Justify.Center">
+            @if(City.Appartments != null)
+            {            
+                @foreach(var appartment in City.Appartments!)
+                {
+                    <MudPaper Elevation="2" Width="930px" Class="mx-auto">
+                        <MudGrid>
+                            <MudItem xs="11" sm="5" md="5" lg="5" xl="5" xxl="5">
+                                <MudCarousel Style="height:240px; width:375px" ShowArrows="true" ShowBullets="false" BulletsColor="Color.Secondary" EnableSwipeGesture="true" AutoCycle="false" TData="object">
+                                    @foreach(var img in appartment.Photos)
+                                    {
+                                        <MudCarouselItem Transition="Transition.Slide" Style="width:100%; animation-duration:0.5s;">
+                                            <MudImage Style="height:240px; min-width:375px; width:100%;" Src=@img Alt="not found" Elevation="0" />
+                                        </MudCarouselItem>
+                                    }                                    
+                                </MudCarousel>
+                            </MudItem>
+                            <MudItem xs="11" sm="7" md="7" lg="7" xl="7" xxl="7">
+                                <MudGrid>
+                                    <MudItem xs="11" sm="9" md="9" lg="9" xl="9" xxl="9">
+                                        <MudStack>
+                                            <MudText Typo="Typo.h4" Color="Color.Dark" Class="mt-3 mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:22px; margin-top:10px;">@appartment.GetAppartmentName()</MudText>
+                                            <MudChipSet MultiSelection="true">
+                                                <MudChip Style="font-weight:400;" Variant="Variant.Outlined" Color="Color.Warning">3 гостя</MudChip>
+                                                <MudChip Style="font-weight:400;" Variant="Variant.Outlined" Color="Color.Primary">2 комнаты</MudChip>
+                                                <MudChip Style="font-weight:400;" Variant="Variant.Outlined" Color="Color.Info">2 спальных места</MudChip>
+                                            </MudChipSet>
+                                        <MudText Style="font-family:Gilroy; font-weight:400;  font-size:15px;">@appartment.Location</MudText>
+                                            <div>
+                                                <MudIcon Icon="@Icons.Material.Filled.Wifi" Size="Size.Medium" Color="Color.Secondary" />
+                                                <MudIcon Icon="@Icons.Material.Filled.Tv" Size="Size.Medium" Color="Color.Secondary" />
+                                                <MudIcon Icon="@Icons.Material.Filled.Microwave" Size="Size.Medium" Color="Color.Secondary" />
+                                                <MudIcon Icon="@Icons.Material.Filled.AcUnit" Size="Size.Medium" Color="Color.Secondary" />
+                                                <MudIcon Icon="@Icons.Material.Filled.Iron" Size="Size.Medium" Color="Color.Secondary" />
+                                                <MudIcon Icon="@Icons.Material.Filled.LocalLaundryService" Size="Size.Medium" Color="Color.Secondary" />
+                                                <MudIcon Icon="@Icons.Material.Filled.RoomService" Size="Size.Medium" Color="Color.Secondary" />
+                                                <MudIcon Icon="@Icons.Material.Filled.Shower" Size="Size.Medium" Color="Color.Secondary" />
+                                                <MudIcon Icon="@Icons.Material.Filled.Coffee" Size="Size.Medium" Color="Color.Secondary" />
+                                            </div>                                    
+                                        </MudStack>                                
+                                    </MudItem>
+                                    <MudItem xs="11" sm="3" md="3" lg="3" xl="3" xxl="3">
+                                    <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-3 mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">@((int)appartment.Price + " ₽")</MudText>
+                                        <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:16px;"> в сутки</MudText>
+                                        <MudButton Size="Size.Small" Variant="Variant.Text" StartIcon="@Icons.Material.Filled.LocalFireDepartment" DisableElevation="true" Color="Color.Error" Style="text-transform:none" Class="mt-2">выгодно</MudButton>
+                                    </MudItem>
+                                    <MudItem xs="12" Style="text-align: right">
+                                        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Class="ms-3" Style="font-weight:500;">подробнее</MudButton>
+                                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ms-2 me-4" Style="font-weight:bold;">заказать</MudButton>
+                                    </MudItem>
+                                </MudGrid>
+                            </MudItem>
+                        </MudGrid>
+                        <MudStack Row="true">
+                    
+                        </MudStack>                
+                    </MudPaper>
+                }
+                <MudPagination Rectangular="true" Variant="Variant.Filled" Size="Size.Large" Count="4" Class="mx-auto" Style="margin-top:50px;" />
+            }
+        </MudStack>
+    }    
 </MudContainer>

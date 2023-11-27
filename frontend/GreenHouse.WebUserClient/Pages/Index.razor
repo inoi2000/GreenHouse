@@ -23,19 +23,19 @@
 </MudStack>
 <MudCarousel Class="mud-width-full relative z-0" Style="height:650px" ShowArrows="false" ShowBullets="true" BulletsColor="Color.Secondary" EnableSwipeGesture="true" AutoCycle="true" AutoCycleTime="TimeSpan.FromSeconds(10)" TData="object">
     <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
-        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src="images/interior10.png" Alt="not found" Elevation="0" />
+        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src=@(State.Host + "Images/index/carousel/interior1.png") Alt="not found" Elevation="0" />
     </MudCarouselItem>
     <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
-        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src="images/interior20.jpg" Alt="not found" Elevation="0" />
+        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src=@(State.Host + "Images/index/carousel/interior2.jpg") Alt="not found" Elevation="0" />
     </MudCarouselItem>
     <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
-        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src="images/interior30.png" Alt="not found" Elevation="0" />
+        <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src=@(State.Host + "Images/index/carousel/interior3.png") Alt="not found" Elevation="0" />
     </MudCarouselItem>
     <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
-        <MudImage Style="min-height:650px; min-width:1000px; width:100%;" Src="images/interior40.png" Alt="not found" Elevation="0" />
+        <MudImage Style="min-height:650px; min-width:1000px; width:100%;" Src=@(State.Host + "Images/index/carousel/interior4.png") Alt="not found" Elevation="0" />
     </MudCarouselItem>
     <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
-        <MudImage Style="min-height:650px; min-width:1000px; width:100%;" Src="images/interior50.png" Alt="not found" Elevation="0" />
+        <MudImage Style="min-height:650px; min-width:1000px; width:100%;" Src=@(State.Host + "Images/index/carousel/interior5.png") Alt="not found" Elevation="0" />
     </MudCarouselItem>
 </MudCarousel>
 
@@ -50,17 +50,19 @@
         else
         {
             <MudGrid Justify="Justify.Center" Spacing="3">
-                @for (int i = 0; i < Cities.Count; i++)
+                @foreach(var city in Cities)
                 {
                     <MudItem xs="11" sm="5" md="3" lg="3" xl="3" xxl="3">
-                        <MudPaper Style="background-image: url('images/orenburg.png'); background-size:cover;" Class="px-3 py-3" Width="100%" Height="250px" Elevation="1">
-                            <MudChip Color="Color.Primary" Style="margin-bottom:135px; opacity:83%;">
-                                <MudText Typo="Typo.subtitle2" Color="Color.Tertiary" Style="font-family:Inter; font-weight:500; font-size:12px;">34 варианта</MudText>
-                            </MudChip>
-                            <MudText Typo="Typo.h5" Color="Color.Tertiary" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:32px;">Оренбург</MudText>
-                        </MudPaper>
+                        <MudButton FullWidth="true" Style="text-align:left;">
+                            <MudPaper Style=@("background-image: url('" + State.Host + "Images/cities/" + city.ImagePath + "'); background-size:cover;") Class="px-3 py-3" Width="100%" Height="250px" Elevation="1" onclick="@(()=> NavigateToCityPage(city.Id))">
+                                <MudChip Color="Color.Primary" Style="margin-bottom:135px; opacity:83%;">
+                                    <MudText Typo="Typo.subtitle2" Color="Color.Tertiary" Style="font-family:Inter; font-weight:500; font-size:12px;">@(city.AppartmentCount + " вариантов")</MudText>
+                                    </MudChip>
+                                    <MudText Typo="Typo.h5" Color="Color.Tertiary" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:32px;">@city.Name</MudText>
+                                </MudPaper>
+                        </MudButton>                        
                     </MudItem>
-                }            
+                }          
             </MudGrid>
         }
         
@@ -70,7 +72,7 @@
         <MudGrid Justify="Justify.Center" Spacing="3">
             <MudItem xs="11" sm="5" md="4" lg="4" xl="4" xxl="4">
                 <MudPaper Class="d-flex px-3 py-3" Width="100%" Height="150px" Elevation="3" Style="align-items:center;">
-                    <MudImage Src="images/Wi-fi.svg" Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
+                    <MudImage Src=@(State.Host + "Images/index/icons/Wi-fi.svg") Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
                     <MudStack>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">ИНТЕРНЕТ И WI-FI</MudText>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:14px;">Бесплатный интернет wi-fi до 100мб/с</MudText>
@@ -79,7 +81,7 @@
             </MudItem>
             <MudItem xs="11" sm="5" md="4" lg="4" xl="4" xxl="4">
                 <MudPaper Class="d-flex px-3 py-3" Width="100%" Height="150px" Elevation="3" Style="align-items:center">
-                    <MudImage Src="images/no_smoking.svg" Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
+                    <MudImage Src=@(State.Host + "Images/index/icons/no_smoking.svg") Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
                     <MudStack>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">DONT SMOKING</MudText>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:14px;">В наших квартирах не курят</MudText>
@@ -88,7 +90,7 @@
             </MudItem>
             <MudItem xs="11" sm="5" md="4" lg="4" xl="4" xxl="4">
                 <MudPaper Class="d-flex px-3 py-3" Width="100%" Height="150px" Elevation="3" Style="align-items:center">
-                    <MudImage Src="images/Clean.svg" Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
+                    <MudImage Src=@(State.Host + "Images/index/icons/Clean.svg") Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
                     <MudStack>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">КЛИНИНГ</MudText>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:14px;">Уборка каждые 7 дней при длительном бронировании</MudText>
@@ -97,7 +99,7 @@
             </MudItem>
             <MudItem xs="11" sm="5" md="4" lg="4" xl="4" xxl="4">
                 <MudPaper Class="d-flex px-3 py-3" Width="100%" Height="150px" Elevation="3" Style="align-items:center">
-                    <MudImage Src="images/Conditioner.svg" Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
+                    <MudImage Src=@(State.Host + "Images/index/icons/Conditioner.svg") Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
                     <MudStack>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">БЫТОВАЯ ТЕХНИКА</MudText>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:14px;">Полный комплект бытовой техники</MudText>
@@ -106,7 +108,7 @@
             </MudItem>
             <MudItem xs="11" sm="5" md="4" lg="4" xl="4" xxl="4">
                 <MudPaper Class="d-flex px-3 py-3" Width="100%" Height="150px" Elevation="3" Style="align-items:center">
-                    <MudImage Src="images/Tableware.svg" Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
+                    <MudImage Src=@(State.Host + "Images/index/icons/Tableware.svg") Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
                     <MudStack>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">КУХОННАЯ ПОСУДА</MudText>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:14px;">Вся необходимая посуда для приготовление пищи</MudText>
@@ -115,7 +117,7 @@
             </MudItem>
             <MudItem xs="11" sm="5" md="4" lg="4" xl="4" xxl="4">
                 <MudPaper Class="d-flex px-3 py-3" Width="100%" Height="150px" Elevation="3" Style="align-items:center">
-                    <MudImage Src="images/Report.svg" Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
+                    <MudImage Src=@(State.Host + "Images/index/icons/Report.svg") Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
                     <MudStack>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">ОТЧЕТНОСТЬ</MudText>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:14px;">Отчетные документы (для организаций)</MudText>
@@ -124,7 +126,7 @@
             </MudItem>
             <MudItem xs="11" sm="5" md="4" lg="4" xl="4" xxl="4">
                 <MudPaper Class="d-flex px-3 py-3" Width="100%" Height="150px" Elevation="3" Style="align-items:center">
-                    <MudImage Src="images/Phone.svg" Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
+                    <MudImage Src=@(State.Host + "Images/index/icons/Phone.svg") Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
                     <MudStack>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">ЗАСЕЛЕНИЕ 24/7</MudText>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:14px;">Бесконтактное заселение в любое время суток</MudText>
@@ -133,7 +135,7 @@
             </MudItem>
             <MudItem xs="11" sm="5" md="4" lg="4" xl="4" xxl="4">
                 <MudPaper Class="d-flex px-3 py-3" Width="100%" Height="150px" Elevation="3" Style="align-items:center">
-                    <MudImage Src="images/Tea-coffee.svg" Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
+                    <MudImage Src=@(State.Host + "Images/index/icons/Tea-coffee.svg") Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
                     <MudStack>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">ЧАЙ И КОФЕ</MudText>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:14px;">Чай, Кофе, Сахар, Соль, Перец — в каждых апартаментах</MudText>
@@ -142,7 +144,7 @@
             </MudItem>
             <MudItem xs="11" sm="5" md="4" lg="4" xl="4" xxl="4">
                 <MudPaper Class="d-flex px-3 py-3" Width="100%" Height="150px" Elevation="3" Style="align-items:center">
-                    <MudImage Src="images/Bed-2.svg" Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
+                    <MudImage Src=@(State.Host + "Images/index/icons/Bed-2.svg") Alt="not found" Width="50" Height="50" Elevation="0" Class="mx-5" />
                     <MudStack>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">УДОБСТВА</MudText>
                         <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:14px;">Каждая квартира оснащена двуспальными кроватями с ортопедическим матрасом</MudText>

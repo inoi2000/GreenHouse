@@ -4,14 +4,10 @@
     {
         public Guid Id { get; init; }
         public string Name { get; set; } = string.Empty;
+        public string ImagePath { get; set; }
+        public int AppartmentCount { get; set; }
 
-        public CityResponse(Guid id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-
-        public CityResponse(string name) : this(Guid.NewGuid(), name) { }
+        public IReadOnlyList<AppartmentResponse>? Appartments { get; set; }
 
         public CityResponse() { }
     }

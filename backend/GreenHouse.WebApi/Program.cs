@@ -3,6 +3,7 @@ using GreenHouse.Data.EntityFramework.Reposirories;
 using GreenHouse.Domain.Interfaces;
 using GreenHouse.WebApi.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace GreenHouse.WebApi
 {
@@ -51,6 +52,14 @@ namespace GreenHouse.WebApi
                     .AllowAnyHeader()
                     .AllowAnyOrigin();
             });
+
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images")),
+
+                RequestPath = new PathString("/Images")
+            });
+            app.UseStaticFiles();
 
             app.MapControllers();
 

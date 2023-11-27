@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "GreenHouse.HttpApiClient": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:65107;http://localhost:65112"
+    }
+  }
+}

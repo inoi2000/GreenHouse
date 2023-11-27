@@ -40,9 +40,12 @@
         <NavMenu />
     </MudDrawer>
     <MudMainContent>
+        <MudScrollToTop>
+            <MudFab Color="Color.Primary" Icon="@Icons.Material.Filled.KeyboardArrowUp" IconSize="Size.Large" />
+        </MudScrollToTop>
         @Body
     </MudMainContent>
-    <footer style="background-color:#004D40; padding-top:30px; margin-top:100px;">
+    <footer style="background-color:#424242; padding-top:30px; margin-top:100px;">
         <MudContainer MaxWidth="MaxWidth.ExtraLarge">
             <MudGrid Justify="Justify.SpaceAround" Spacing="3">
                 <MudItem xs="11" sm="5" md="3" lg="3" xl="2" xxl="2">
@@ -67,10 +70,10 @@
                         </MudText>
                     </MudStack>
                     <MudStack>
-                        <MudFab StartIcon="@Icons.Custom.Brands.Instagram" Size="Size.Small" Label="Instagram" Color="Color.Secondary" DisableElevation="true" />
-                        <MudFab StartIcon="@Icons.Custom.Brands.Telegram" Size="Size.Small" Label="Telegram" Color="Color.Secondary" DisableElevation="true" />
-                        <MudFab StartIcon="@Icons.Custom.Brands.WhatsApp" Size="Size.Small" Label="WhatsApp" Color="Color.Secondary" DisableElevation="true" />
-                        <MudFab StartIcon="@Icons.Custom.Brands.YouTube" Size="Size.Small" Label="YouTube" Color="Color.Secondary" DisableElevation="true" />
+                        <MudFab StartIcon="@Icons.Custom.Brands.Instagram" Size="Size.Small" Label="Instagram" Color="Color.Primary" DisableElevation="true" />
+                        <MudFab StartIcon="@Icons.Custom.Brands.Telegram" Size="Size.Small" Label="Telegram" Color="Color.Primary" DisableElevation="true" />
+                        <MudFab StartIcon="@Icons.Custom.Brands.WhatsApp" Size="Size.Small" Label="WhatsApp" Color="Color.Primary" DisableElevation="true" />
+                        <MudFab StartIcon="@Icons.Custom.Brands.YouTube" Size="Size.Small" Label="YouTube" Color="Color.Primary" DisableElevation="true" />
                     </MudStack>
                 </MudItem>
             </MudGrid>
@@ -90,11 +93,16 @@
     {
         Palette = new PaletteLight()
             {
-                Primary = Colors.Teal.Darken4,
+                //Primary = Colors.Teal.Darken3,
+                Primary = Colors.Green.Default,
+                //Primary = Colors.LightGreen.Default,
                 //Primary = Colors.DeepPurple.Darken2,
                 //Primary = Colors.Orange.Accent4,
 
+                //Secondary = Colors.Grey.Darken1,
+                //Secondary = Colors.LightGreen.Darken3,
                 Secondary = Colors.Grey.Darken1,
+
                 Tertiary = Colors.Shades.White,
                 AppbarBackground = Colors.Shades.White,
                 AppbarText = Colors.Grey.Darken4,

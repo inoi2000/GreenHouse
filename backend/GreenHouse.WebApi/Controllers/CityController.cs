@@ -2,6 +2,7 @@
 using GreenHouse.Domain.Interfaces;
 using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
+using GreenHouse.WebApi.Services.Extentions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreenHouse.WebApi.Controllers
@@ -25,7 +26,7 @@ namespace GreenHouse.WebApi.Controllers
                 var result = new List<CityResponse>();
                 foreach (City city in cities)
                 {
-                    result.Add(new CityResponse(city.Id, city.Name));
+                    result.Add(new CityResponse() { Id=city.Id, Name= city.Name, ImagePath=city.ImagePath, AppartmentCount = city.Appartments.Count});
                 }
                 return Ok(result);
             }
@@ -35,12 +36,49 @@ namespace GreenHouse.WebApi.Controllers
             }
         }
 
+        [HttpGet("get_city")]
+        public async Task<ActionResult<CityResponse>> GetCity([FromQuery] Guid Id, CancellationToken token)
+        {
+            try
+            {
+                var city = await _cityRepository.GetById(Id, token);
+                var appartmentResponses = new List<AppartmentResponse>();
+
+                foreach(var appartment in city.Appartments)
+                {
+                    appartmentResponses.Add(appartment.CreateResponce());
+                };
+
+                var result = new CityResponse()
+                {
+                    Id = city.Id,
+                    Name = city.Name,
+                    ImagePath = city.ImagePath,
+                    AppartmentCount = city.Appartments.Count,
+                    Appartments = appartmentResponses
+                };
+                
+                return Ok(result);
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound(Id);
+            }
+        }
+
         [HttpPost("add_city")]
         public async Task<IResult> AddCity([FromBody] CityRequest request, CancellationToken cancellationToken)
         {
-            var city = new City(request.Name);
+            var city = new City(request.Name, request.ImagePath);
             await _cityRepository.Add(city, cancellationToken);
-            return Results.Created($"/cities/{city.Id}", city);
+            return Results.Ok();
+        }
+
+        [HttpDelete("delete_city")]
+        public async Task<IResult> DeleteCity([FromQuery] Guid Id, CancellationToken cancellationToken)
+        {
+            await _cityRepository.Delete(Id, cancellationToken);
+            return Results.Ok();
         }
 
         [HttpPut("edit_city")]
@@ -48,7 +86,7 @@ namespace GreenHouse.WebApi.Controllers
         {
             try
             {
-                var city = new City(request.Id, request.Name);
+                var city = new City(request.Id, request.Name, request.ImagePath);
                 await _cityRepository.Update(city, token);
                 return Results.Ok();
             }
