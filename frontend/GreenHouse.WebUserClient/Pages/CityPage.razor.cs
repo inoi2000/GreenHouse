@@ -1,12 +1,14 @@
 ﻿using GreenHouse.HttpModels.Responses;
+using GreenHouse.WebUserClient.Shared;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace GreenHouse.WebUserClient.Pages
 {
     public partial class CityPage
     {
         [Parameter] public Guid Id { get; set; }
-        //private IReadOnlyList<AppartmentResponse>? Appartments { get; set; }
+        [Inject] private IDialogService DialogService { get; set; }
         private CityResponse City { get; set; }
 
         private string GetCityName()
@@ -25,6 +27,11 @@ namespace GreenHouse.WebUserClient.Pages
             {
                 return string.Empty;
             }
+        }
+        private void BookedAppartment(AppartmentResponse appartment)
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+            DialogService.Show<BookedDialog>("Бронирование", options);
         }
 
         protected override async Task OnInitializedAsync()

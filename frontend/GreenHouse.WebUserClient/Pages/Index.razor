@@ -3,6 +3,7 @@
 
 <PageTitle>Главная</PageTitle>
 
+@*Титульная надпись*@
 <MudStack Class="absolute z-10" Style="margin-left: auto; margin-right: auto; margin-top:70px; left: 0; right: 0; text-align: center;">
     <MudText Style="font-family:Gilroy;" Typo="Typo.h4" GutterBottom="true" Color="Color.Tertiary">Забронируйте онлайн  апартаменты</MudText>
     <MudText Style="font-family:Gilroy; font-weight:300" Typo="Typo.h2" GutterBottom="true" Color="Color.Tertiary">ГРИНХАУС</MudText>
@@ -10,7 +11,7 @@
     <MudText Style="font-family:Gilroy;" Typo="Typo.h5" GutterBottom="true" Color="Color.Tertiary">Выберите город и дату заезда</MudText>
     <MudGrid Justify="Justify.Center" Spacing="0">
         <MudItem xs="11" sm="5" md="4" lg="3" xl="2" xxl="1" Class="mx-2 my-1">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Style="max-width:320px; height: 56px;">
+            <MudButton @onclick="OpenBookDialog" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Style="max-width:320px; height: 56px;">
                 <MudText Typo="Typo.button" Color="Color.Tertiary"  Style="font-family:Gilroy; font-weight:400;">Забронировать</MudText>
             </MudButton>
         </MudItem>
@@ -21,6 +22,8 @@
         </MudItem>
     </MudGrid>
 </MudStack>
+
+@*Карусель*@
 <MudCarousel Class="mud-width-full relative z-0" Style="height:650px" ShowArrows="false" ShowBullets="true" BulletsColor="Color.Secondary" EnableSwipeGesture="true" AutoCycle="true" AutoCycleTime="TimeSpan.FromSeconds(10)" TData="object">
     <MudCarouselItem Transition="Transition.Fade" Style="width:100%; animation-duration:2.5s;">
         <MudImage Style="min-height:650px; min-width:1200px; width:100%;" Src=@(State.Host + "Images/index/carousel/interior1.png") Alt="not found" Elevation="0" />
@@ -39,6 +42,7 @@
     </MudCarouselItem>
 </MudCarousel>
 
+@*Выбор города*@
 <MudContainer MaxWidth="MaxWidth.Large">
     <MudStack Style="margin-left:auto; margin-right:auto;">
         <MudText Style="font-family:Gilroy; font-weight:300; width:100%; text-align:center; margin-top:70px; margin-bottom:-10px;" Typo="Typo.h3" GutterBottom="true" Color="Color.Dark">ВЫБОР ГОРОДА</MudText>
@@ -60,12 +64,11 @@
                                     </MudChip>
                                     <MudText Typo="Typo.h5" Color="Color.Tertiary" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:32px;">@city.Name</MudText>
                                 </MudPaper>
-                        </MudButton>                        
+                        </MudButton>
                     </MudItem>
                 }          
             </MudGrid>
         }
-        
 
         <MudText Style="font-family:Gilroy; font-weight:300; width:100%; text-align:center; margin-top:70px; margin-bottom:-10px;" Typo="Typo.h3" GutterBottom="true" Color="Color.Dark">GREEN HOUSE</MudText>
         <MudText Style="font-family:Gilroy; font-weight:bold; width:100%; text-align:center;" Typo="Typo.subtitle1" GutterBottom="true" Color="Color.Primary">лучший сервис бронирования</MudText>

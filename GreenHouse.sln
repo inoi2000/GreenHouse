@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.WebUserClient", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.HttpApiClient", "frontend\GreenHouse.HttpClient\GreenHouse.HttpApiClient.csproj", "{F0EBE8FF-81FA-4850-8182-B56EB6D8DFD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.WebAdminClient", "frontend\GreenHouse.WebAdminClient\GreenHouse.WebAdminClient.csproj", "{CFB0E434-56CC-44E7-A585-AA1A07243009}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.WebAdminClient", "frontend\GreenHouse.WebAdminClient\GreenHouse.WebAdminClient.csproj", "{CFB0E434-56CC-44E7-A585-AA1A07243009}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

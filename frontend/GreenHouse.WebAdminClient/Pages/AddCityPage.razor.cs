@@ -1,6 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using GreenHouse.HttpModels.Requests;
+﻿using GreenHouse.HttpModels.Requests;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 
 namespace GreenHouse.WebAdminClient.Pages
@@ -8,35 +8,33 @@ namespace GreenHouse.WebAdminClient.Pages
     public partial class AddCityPage
     {
         [Inject] private ISnackbar Snackbar { get; set; }
-        private CityRequest model = new();
+        private string Name { get; set; }
+        private string Description { get; set; }
+        private string ImagUri { get; set; }
+        private decimal Price { get; set; }
 
-        bool success;
-        string[] errors = { };
-        MudTextField<string> pwField1;
-        MudForm form;
+        MudForm form { get; set; }
 
-        private IEnumerable<string> PasswordStrength(string pw)
+        private CancellationTokenSource _cts = new CancellationTokenSource();
+
+        private async Task SaveProduct()
         {
-            if (string.IsNullOrWhiteSpace(pw))
-            {
-                yield return "Password is required!";
-                yield break;
-            }
-            if (pw.Length < 8)
-                yield return "Password must be at least of length 8";
-            if (!Regex.IsMatch(pw, @"[A-Z]"))
-                yield return "Password must contain at least one capital letter";
-            if (!Regex.IsMatch(pw, @"[a-z]"))
-                yield return "Password must contain at least one lowercase letter";
-            if (!Regex.IsMatch(pw, @"[0-9]"))
-                yield return "Password must contain at least one digit";
+            var city = new CityRequest() 
+            { 
+
+            };
+            //await OnlineShopClient.AddProductAsync(Product, _cts.Token);
         }
 
-        private string PasswordMatch(string arg)
+        private void UploadFiles(IBrowserFile file)
         {
-            if (pwField1.Value != arg)
-                return "Passwords don't match";
-            return null;
+            
+            //TODO upload the files to the server
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
         }
     }
 }
