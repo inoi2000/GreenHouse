@@ -1,0 +1,28 @@
+﻿@page "/add_city"
+@using System.ComponentModel.DataAnnotations;
+@inherits AppComponentBase
+
+<PageTitle>Counter</PageTitle>
+
+<MudGrid>
+    <MudItem xs="12" sm="7">
+        <MudPaper Class="pa-4">
+            <MudForm @ref="form">
+                <MudTextField T="string" Label="Название" Required="true" RequiredError="Название обязательно к заполнению!" @bind-Value="@Name"/>
+                <MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
+                    <ButtonTemplate>
+                        <MudFab HtmlTag="label"
+                                Color="Color.Secondary"
+                                Icon="@Icons.Material.Filled.Image"
+                                Label="Load picture"
+                                for="@context.Id" />
+                    </ButtonTemplate>
+                </MudFileUpload>
+            </MudForm>
+        </MudPaper>
+        <MudPaper Class="pa-4 mt-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => SaveProduct())">Сохранить</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(()=>form.Reset())" Class="mx-2">Отчистить</MudButton>
+        </MudPaper>
+    </MudItem>
+</MudGrid>

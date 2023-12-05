@@ -3,6 +3,7 @@ using GreenHouse.Data.EntityFramework.Reposirories;
 using GreenHouse.Domain.Interfaces;
 using GreenHouse.WebApi.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace GreenHouse.WebApi
 {
@@ -18,6 +19,8 @@ namespace GreenHouse.WebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddCors();
 
             string connection = builder.Configuration.GetConnectionString("DefaultConnection")!;
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
@@ -42,6 +45,21 @@ namespace GreenHouse.WebApi
 
             app.UseAuthorization();
 
+            app.UseCors(policy =>
+            {
+                policy
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin();
+            });
+
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images")),
+
+                RequestPath = new PathString("/Images")
+            });
+            app.UseStaticFiles();
 
             app.MapControllers();
 

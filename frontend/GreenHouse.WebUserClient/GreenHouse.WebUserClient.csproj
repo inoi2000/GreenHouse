@@ -18,6 +18,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\shared\GreenHouse.HttpModels\GreenHouse.HttpModels.csproj" />
+	  <ProjectReference Include="..\GreenHouse.HttpClient\GreenHouse.HttpApiClient.csproj" />
 	</ItemGroup>
 	
 	

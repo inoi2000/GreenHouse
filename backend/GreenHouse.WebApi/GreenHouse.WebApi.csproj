@@ -21,4 +21,10 @@
     <ProjectReference Include="..\infrastructure\IdentityPasswordHasherLib\IdentityPasswordHasherLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\appartments\" />
+    <Folder Include="wwwroot\Images\cities\" />
+    <Folder Include="wwwroot\Images\index\" />
+  </ItemGroup>
+
 </Project>

@@ -33,7 +33,6 @@ namespace GreenHouse.Data.EntityFramework.Reposirories
 
         public async override Task Update(Appartment entity, CancellationToken cancellationToken)
         {
-            //TODO Problem
             var appartment = await GetById(entity.Id, cancellationToken);
 
             if (!appartment.CityId.Equals(entity.CityId)) { appartment.CityId = entity.CityId; }
@@ -52,7 +51,8 @@ namespace GreenHouse.Data.EntityFramework.Reposirories
                 appartment.Rules.IsPartyAllowed = entity.Rules.IsPartyAllowed;
             }
 
-            //TODO добавить обновление фотографий! 
+            if(entity.Photos is not null) appartment.Photos = entity.Photos;
+            if(entity.Conveniences is not null) appartment.Conveniences = entity.Conveniences;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }

@@ -1,0 +1,29 @@
+﻿<MudDialog Style="padding:2px;">
+    <DialogContent>
+        <MudStack Style="margin:3px;">
+            <MudText>Подберем лучшее предложение</MudText>
+            <MudTextField @bind-Value="HelperText" Label="Имя" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Person" AdornmentColor="Color.Primary" />
+            <MudTextField @bind-Value="HelperText" Label="Телефон" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Phone" AdornmentColor="Color.Primary" />
+            <MudTextField T="string" @bind-Value="HelperText" Label="Пожелания" HelperText="*Необязательное поле" Variant="Variant.Filled" Lines="5" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Edit" AdornmentColor="Color.Primary" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Warning" OnClick="Cancel" Variant="Variant.Filled">Отмена</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit" Variant="Variant.Filled">Отправить заявку</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Inject] private ISnackbar Snackbar { get; set; }
+
+    public string HelperText { get; set; }
+
+    void Submit() {
+        Snackbar.Add("Ваш запрос успешно отправлен", Severity.Success);
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    void Cancel() => MudDialog.Cancel();
+
+
+}
