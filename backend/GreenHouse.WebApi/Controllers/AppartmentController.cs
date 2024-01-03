@@ -3,6 +3,7 @@ using GreenHouse.Domain.Interfaces;
 using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
 using GreenHouse.WebApi.Services.Extentions;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreenHouse.WebApi.Controllers
@@ -15,6 +16,26 @@ namespace GreenHouse.WebApi.Controllers
         public AppartmentController(IAppartmentRepository appartmentRepository)
         {
             _appartmentRepository = appartmentRepository ?? throw new ArgumentNullException(nameof(appartmentRepository));    
+        }
+
+        [HttpGet("get_all_appartments")]
+        public async Task<ActionResult<IReadOnlyList<AppartmentResponse>>> GetAllAppartments([FromQuery] Guid cityId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                IReadOnlyList<Appartment> appartments = await _appartmentRepository.GetAll(cancellationToken);
+                var result = new List<AppartmentResponse>();
+                foreach (Appartment appartment in appartments)
+                {
+                    var temp = appartment.CreateResponce();
+                    result.Add(temp);
+                }
+                return Ok(result);
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("get_appartments")]
@@ -57,7 +78,7 @@ namespace GreenHouse.WebApi.Controllers
         {
             try
             {
-                var appartment = request.CreateAppartment();
+                var appartment = request.CreateAppartment(true);
 
                 await _appartmentRepository.Add(appartment, cancellationToken);
                 return Results.Created($"/appartments/{appartment.Id}", appartment);
@@ -73,7 +94,7 @@ namespace GreenHouse.WebApi.Controllers
         {
             try
             {
-                var appartment = request.CreateAppartment();
+                var appartment = request.CreateAppartment(false);
                 await _appartmentRepository.Update(appartment, cancellationToken);
                 return Results.Ok();
             }

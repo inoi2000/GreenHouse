@@ -1,5 +1,6 @@
 ﻿using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -58,6 +59,33 @@ namespace GreenHouse.HttpApiClient
         public async Task DeleteCity(Guid Id, CancellationToken cancellationToken)
         {
             using var response = await _httpClient.DeleteAsync("cities/delete_city?Id={Id}", cancellationToken);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task<IReadOnlyList<AppartmentResponse>> GetAllAppartmentsAsync(CancellationToken cancellationToken)
+        {
+            var appartmentTasks = _httpClient.GetFromJsonAsync<IReadOnlyList<AppartmentResponse>>("appartments/get_all_appartments", cancellationToken);
+            if (appartmentTasks is null)
+            {
+                throw new InvalidOperationException("The server returned null cities");
+            }
+            var appartments = await appartmentTasks;
+            if (appartments is null)
+            {
+                throw new InvalidOperationException("The server returned null cities");
+            }
+            return appartments;
+        }
+
+        public async Task AddAppartment(AppartmentRequest appartmentRequest, CancellationToken cancellationToken)
+        {
+            using var response = await _httpClient.PostAsJsonAsync("appartments/add_appartment", appartmentRequest, cancellationToken);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task UploadAppatrmentPhotos(List<IBrowserFile> files, CancellationToken cancellationToken)
+        {
+            using var response = await _httpClient.PostAsJsonAsync("appartments/upload_photos", files, cancellationToken);
             response.EnsureSuccessStatusCode();
         }
     }

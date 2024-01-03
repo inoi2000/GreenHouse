@@ -23,8 +23,8 @@
             {            
                 @foreach(var appartment in City.Appartments!)
                 {
-                    <MudPaper Elevation="2" Width="930px" Class="mx-auto">
-                        <MudGrid>
+                    <MudPaper Elevation="2" Width="935px" Class="mx-auto">
+                        <MudGrid Spacing="0">
                             <MudItem xs="11" sm="5" md="5" lg="5" xl="5" xxl="5">
                                 <MudCarousel Style="height:240px; width:375px" ShowArrows="true" ShowBullets="false" BulletsColor="Color.Secondary" EnableSwipeGesture="true" AutoCycle="false" TData="object">
                                     @foreach(var img in appartment.Photos)
@@ -37,13 +37,13 @@
                             </MudItem>
                             <MudItem xs="11" sm="7" md="7" lg="7" xl="7" xxl="7">
                                 <MudGrid>
-                                    <MudItem xs="11" sm="9" md="9" lg="9" xl="9" xxl="9">
+                                    <MudItem xs="11" sm="8" md="8" lg="8" xl="8" xxl="8">
                                         <MudStack>
                                             <MudText Typo="Typo.h4" Color="Color.Dark" Class="mt-3 mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:22px; margin-top:10px;">@appartment.GetAppartmentName()</MudText>
                                             <MudChipSet MultiSelection="true">
-                                                <MudChip Style="font-weight:400;" Variant="Variant.Outlined" Color="Color.Warning">3 гостя</MudChip>
-                                                <MudChip Style="font-weight:400;" Variant="Variant.Outlined" Color="Color.Primary">2 комнаты</MudChip>
-                                                <MudChip Style="font-weight:400;" Variant="Variant.Outlined" Color="Color.Info">2 спальных места</MudChip>
+                                                <MudChip Style="font-weight:400;" Variant="Variant.Outlined" Color="Color.Warning">@GetNumberOfGuests(appartment)</MudChip>
+                                                <MudChip Style="font-weight:400;" Variant="Variant.Outlined" Color="Color.Primary">@GetNumberOfRooms(appartment)</MudChip>
+                                                <MudChip Style="font-weight:400;" Variant="Variant.Outlined" Color="Color.Info">@GetNumberOfSlippingPlaces(appartment)</MudChip>
                                             </MudChipSet>
                                         <MudText Style="font-family:Gilroy; font-weight:400;  font-size:15px;">@appartment.Location</MudText>
                                             <div>
@@ -59,14 +59,14 @@
                                             </div>                                    
                                         </MudStack>                                
                                     </MudItem>
-                                    <MudItem xs="11" sm="3" md="3" lg="3" xl="3" xxl="3">
-                                    <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-3 mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">@((int)appartment.Price + " ₽")</MudText>
-                                        <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0" Style="font-family:Gilroy; font-weight:600;  font-size:16px;"> в сутки</MudText>
-                                        <MudButton Size="Size.Small" Variant="Variant.Text" StartIcon="@Icons.Material.Filled.LocalFireDepartment" DisableElevation="true" Color="Color.Error" Style="text-transform:none" Class="mt-2">выгодно</MudButton>
+                                    <MudItem xs="11" sm="4" md="4" lg="4" xl="4" xxl="4">
+                                        <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-3 mb-0 ms-2" Style="font-family:Gilroy; font-weight:600;  font-size:24px;">@("От " + (int)appartment.Price + " ₽")</MudText>
+                                            <MudText Typo="Typo.h5" Color="Color.Dark" Class="mt-auto mb-0 ms-2" Style="font-family:Gilroy; font-weight:600;  font-size:16px;"> в сутки</MudText>
+                                            <MudButton Size="Size.Small" Variant="Variant.Text" StartIcon="@Icons.Material.Filled.LocalFireDepartment" DisableElevation="true" Color="Color.Error" Style="text-transform:none" Class="mt-2 ms-2">выгодно</MudButton>
                                     </MudItem>
                                     <MudItem xs="12" Style="text-align: right">
                                         <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Class="ms-3" Style="font-weight:500;">подробнее</MudButton>
-                                            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ms-2 me-4" Style="font-weight:bold;" OnClick=@(()=>BookedAppartment(appartment))>заказать</MudButton>
+                                            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ms-2 me-4" Style="font-weight:bold;" OnClick=@(()=>BookedAppartment(appartment))>забронировать</MudButton>
                                     </MudItem>
                                 </MudGrid>
                             </MudItem>

@@ -13,15 +13,6 @@ namespace GreenHouse.Data.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
             modelBuilder.Entity<Appartment>()
-                .Property(a => a.Conveniences)
-                .HasConversion(
-                    v => string.Join(",", v.Select(e => e.ToString("D")).ToArray()),
-                    v => v.Split(new[] { ',' })
-                .Select(e => Enum.Parse(typeof(Convenience), e))
-                .Cast<Convenience>()
-                .ToList());
-
-            modelBuilder.Entity<Appartment>()
                 .Property(a => a.Photos)
                 .HasConversion(
                     v => string.Join(",", v),

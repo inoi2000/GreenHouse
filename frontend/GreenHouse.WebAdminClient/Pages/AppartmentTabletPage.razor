@@ -1,48 +1,48 @@
 ﻿@page "/appartments"
 @using System.ComponentModel.DataAnnotations;
+@using System.Net.Http.Json
+@using GreenHouse.HttpModels.Responses;
 @inherits AppComponentBase
 
-<PageTitle>Counter</PageTitle>
+<PageTitle>Квартиры</PageTitle>
 
-<MudGrid>
-    <MudItem xs="12" sm="7">
-        <MudPaper Class="pa-4">
-            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                <MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!" />
-                <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
-                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
-                <MudTextField T="string" Label="Password" HelperText="Choose a strong password" @ref="pwField1"
-                              InputType="InputType.Password"
-                              Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-                              RequiredError="Password is required!" />
-                <MudTextField T="string"
-                              Label="Password" HelperText="Repeat the password" InputType="InputType.Password"
-                              Validation="@(new Func<string, string>(PasswordMatch))" />
-                <div class="d-flex">
-                    <MudRadioGroup T="string" Required="true" RequiredError="Account type is required!">
-                        <MudRadio Option="@("Personal")">Personal</MudRadio>
-                        <MudRadio Option="@("Professional")">Professional</MudRadio>
-                    </MudRadioGroup>
-                </div>
-                <div class="d-flex align-center justify-space-between">
-                    <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Label="I agree!" />
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Register</MudButton>
-                </div>
-            </MudForm>
-        </MudPaper>
-        <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>form.Validate())">Validate</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" Class="mx-2">Reset</MudButton>
-            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="@(()=>form.ResetValidation())">Reset Validation</MudButton>
-        </MudPaper>
-    </MudItem>
-    <MudItem xs="12" sm="5">
-        <MudPaper Class="pa-4 mud-height-full">
-            <MudText Typo="Typo.subtitle2">@($"Errors ({errors.Length})")</MudText>
-                @foreach (var error in errors)
-            {
-                <MudText Color="@Color.Error">@error</MudText>
-            }
-        </MudPaper>
-    </MudItem>
-</MudGrid>
+@if(Appartments is not null)
+{
+    <MudTable Items="@Appartments" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
+        <HeaderContent>
+            <MudTh>Адрес</MudTh>
+            <MudTh>Число гостей</MudTh>
+            <MudTh>Число комнат</MudTh>
+            <MudTh>Число спальных мест</MudTh>
+            <MudTh>Площадь</MudTh>
+            <MudTh>Залог</MudTh>
+            <MudTh>Цена</MudTh>
+            <MudTh></MudTh>
+            <MudTh></MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Адрес">@context.Location</MudTd>
+            <MudTd DataLabel="Число гостей">@context.NumberOfGuests</MudTd>
+            <MudTd DataLabel="Число комнат">@context.NumberOfRooms</MudTd>
+            <MudTd DataLabel="Число спальных мест">@context.NumberOfSlippingPlaces</MudTd>
+            <MudTd DataLabel="Площадь">@context.Square</MudTd>
+            <MudTd DataLabel="Залог">@context.Bail</MudTd>
+            <MudTd DataLabel="Цена">@context.Price</MudTd>
+            <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="(() => RemoveApartment(context))">Показать фото</MudButton></MudTd>
+            <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="(() => RemoveApartment(context))">Редактировать</MudButton></MudTd>
+            <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="(() => RemoveApartment(context))">Удалить</MudButton></MudTd>
+        </RowTemplate>
+        <ChildRowContent>
+            <div style="display: flex; margin:5px;">
+                @foreach (var photo in context.Photos)
+                {
+                    <MudImage Src=@photo Alt="not found" Elevation="25" Class="rounded-lg" Style="width:100%; height:auto; margin-bottom:10px;" />
+                }
+            </div>
+        </ChildRowContent>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+}

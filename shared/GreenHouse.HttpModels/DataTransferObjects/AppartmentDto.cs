@@ -11,7 +11,6 @@
         public decimal Bail { get; set; }
         public decimal Price { get; set; }
         public List<string> Photos { get; set; }
-        public List<int> Conveniences { get; init; }
 
         public RulesListDto? Rules { get; set; }
     }

@@ -52,7 +52,6 @@ namespace GreenHouse.Data.EntityFramework.Reposirories
             }
 
             if(entity.Photos is not null) appartment.Photos = entity.Photos;
-            if(entity.Conveniences is not null) appartment.Conveniences = entity.Conveniences;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
         }

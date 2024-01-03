@@ -1,42 +1,34 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net.Http;
+using System.Text.RegularExpressions;
 using GreenHouse.HttpModels.Requests;
+using GreenHouse.HttpModels.Responses;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using static MudBlazor.CategoryTypes;
 
 namespace GreenHouse.WebAdminClient.Pages
 {
     public partial class AppartmentTabletPage
     {
         [Inject] private ISnackbar Snackbar { get; set; }
-        private CityRequest model = new();
 
-        bool success;
-        string[] errors = { };
-        MudTextField<string> pwField1;
-        MudForm form;
+        private bool _loading = true;
+        private string searchString1 { get; set; } = String.Empty;
+        private AppartmentResponse selectedItem1 = null;
+        private IReadOnlyList<AppartmentResponse>? Appartments { get; set; }
+        private HashSet<AppartmentResponse> selectedItems = new HashSet<AppartmentResponse>();
 
-        private IEnumerable<string> PasswordStrength(string pw)
+        private IEnumerable<AppartmentResponse> Elements = new List<AppartmentResponse>();
+
+        private async Task RemoveApartment(AppartmentResponse appartment)
         {
-            if (string.IsNullOrWhiteSpace(pw))
-            {
-                yield return "Password is required!";
-                yield break;
-            }
-            if (pw.Length < 8)
-                yield return "Password must be at least of length 8";
-            if (!Regex.IsMatch(pw, @"[A-Z]"))
-                yield return "Password must contain at least one capital letter";
-            if (!Regex.IsMatch(pw, @"[a-z]"))
-                yield return "Password must contain at least one lowercase letter";
-            if (!Regex.IsMatch(pw, @"[0-9]"))
-                yield return "Password must contain at least one digit";
+
         }
-
-        private string PasswordMatch(string arg)
+        
+        protected override async Task OnInitializedAsync()
         {
-            if (pwField1.Value != arg)
-                return "Passwords don't match";
-            return null;
+            Appartments = await GreenHouseClient.GetAllAppartmentsAsync(_cts.Token);
+            _loading = false;
         }
     }
 }

@@ -14,7 +14,6 @@
         public List<string> Photos { get; set; }
 
         public RulesList Rules { get; init; }        
-        public List<Convenience> Conveniences { get; set; }
         public List<Order> Orders { get; init; }
 
         public Guid Id { get => _id; init => _id = value; }

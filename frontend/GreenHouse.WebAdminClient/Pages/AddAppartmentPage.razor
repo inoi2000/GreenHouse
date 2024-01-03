@@ -1,47 +1,51 @@
 ﻿@page "/add_appartment"
 @using System.ComponentModel.DataAnnotations;
+@using GreenHouse.HttpModels.Responses;
 @inherits AppComponentBase
 
-<PageTitle>Counter</PageTitle>
+<PageTitle>Добавление квартиры</PageTitle>
 
 <MudGrid>
     <MudItem xs="12" sm="7">
         <MudPaper Class="pa-4">
             <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
-                <MudTextField T="string" Label="Username" Required="true" RequiredError="User name is required!" />
-                <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!"
-                              Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})" />
-                <MudTextField T="string" Label="Password" HelperText="Choose a strong password" @ref="pwField1"
-                              InputType="InputType.Password"
-                              Validation="@(new Func<string, IEnumerable<string>>(PasswordStrength))" Required="true"
-                              RequiredError="Password is required!" />
-                <MudTextField T="string"
-                              Label="Password" HelperText="Repeat the password" InputType="InputType.Password"
-                              Validation="@(new Func<string, string>(PasswordMatch))" />
-                <div class="d-flex">
-                    <MudRadioGroup T="string" Required="true" RequiredError="Account type is required!">
-                        <MudRadio Option="@("Personal")">Personal</MudRadio>
-                        <MudRadio Option="@("Professional")">Professional</MudRadio>
-                    </MudRadioGroup>
-                </div>
-                <div class="d-flex align-center justify-space-between">
-                    <MudCheckBox T="bool" Required="true" RequiredError="You must agree" Label="I agree!" />
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!success)" Class="ml-auto">Register</MudButton>
-                </div>
-            </MudForm>
+                @if (Cities is not null)
+                {
+                    <MudSelect T="string" @bind-Value="SelectedCity" Label="Город" AnchorOrigin="Origin.BottomCenter" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.LocationCity" IconSize="Size.Small" AdornmentColor="Color.Primary" Required="true" RequiredError="Город является обязательным!">
+                        @foreach (CityResponse city in Cities)
+                        {
+                            <MudSelectItem Value="@(city.Id.ToString())">@city.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+                <MudTextField @bind-Value="Location" T="string" Label="Введите адрес" Required="true" RequiredError="Адрес является обязательным!" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.LocationOn" IconSize="Size.Small" AdornmentColor="Color.Primary" />
+                <MudNumericField @bind-Value="NumberOfGuests" T="int" Label="Введите число гостей" Required="true" RequiredError="Число гостей является обязательным!" Min="1" Max="9" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.SupervisorAccount" IconSize="Size.Small" AdornmentColor="Color.Primary" />
+                <MudNumericField @bind-Value="NumberOfRooms" T="int" Label="Введите число комнат" Required="true" RequiredError="Число комнат является обязательным!" Min="1" Max="9" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.BedroomParent" IconSize="Size.Small" AdornmentColor="Color.Primary" />
+                <MudNumericField @bind-Value="NumberOfSlippingPlaces" T="int" Label="Введите число спальных мест" Required="true" RequiredError="Число спальных мест является обязательным!" Min="1" Max="9" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Bed" IconSize="Size.Small" AdornmentColor="Color.Primary" />
+                <MudNumericField @bind-Value="Square" T="double" Label="Введите площадь" Required="true" RequiredError="Площадь является обязательной!" Min="1" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Subscript" IconSize="Size.Small" AdornmentColor="Color.Primary" />
+                <MudNumericField @bind-Value="Bail" T="decimal" Label="Введите сумму залога" Required="true" RequiredError="Суммв залога является обязательной!" Min="1" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.CurrencyRuble" IconSize="Size.Small" AdornmentColor="Color.Primary" />
+                <MudNumericField @bind-Value="Price" T="decimal" Label="Введите цену" Required="true" RequiredError="Цена является обязательной!" Min="1" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.CurrencyRuble" IconSize="Size.Small" AdornmentColor="Color.Primary" />
+                <MudCheckBox @bind-Value="@IsChildrenAllowed" T="bool" Label="Разрешены дети" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+                <MudCheckBox @bind-Value="@IsPetsAllowed" T="bool" Label="Разрешены животные" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+                <MudCheckBox @bind-Value="@IsSmokingAllowed" T="bool" Label="Разрешено курить" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+                <MudCheckBox @bind-Value="@IsPartyAllowed" T="bool" Label="Разрешены вечерики" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
+            </MudForm>   
         </MudPaper>
         <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>form.Validate())">Validate</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" Class="mx-2">Reset</MudButton>
-            <MudButton Variant="Variant.Filled" DisableElevation="true" OnClick="@(()=>form.ResetValidation())">Reset Validation</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>Save())">Сохранить</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(() => Reset())" Class="mx-2">Отчистить</MudButton>
         </MudPaper>
     </MudItem>
     <MudItem xs="12" sm="5">
         <MudPaper Class="pa-4 mud-height-full">
-            <MudText Typo="Typo.subtitle2">@($"Errors ({errors.Length})")</MudText>
-                @foreach (var error in errors)
+            <MudTextField @bind-Value="PhotoUri" Label="Ссылка на фото" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Photo" AdornmentColor="Color.Primary" />
+            <div style="width: 100%; display: flex; justify-content: center; margin-top:10px; margin-bottom:15px;">
+                <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Style="margin:5px" OnClick="@(()=>AddPhoto(PhotoUri))" />
+                <MudFab Color="Color.Error" StartIcon="@Icons.Material.Filled.Remove" Style="margin:5px" OnClick="@(()=>RemovePhoto())" />
+            </div>
+            @foreach(var photo in Photos)
             {
-                <MudText Color="@Color.Error">@error</MudText>
+                <MudImage Src=@photo Alt="not found" Elevation="25" Class="rounded-lg" Style="width:100%; height:auto; margin-bottom:10px;"/>
             }
         </MudPaper>
     </MudItem>

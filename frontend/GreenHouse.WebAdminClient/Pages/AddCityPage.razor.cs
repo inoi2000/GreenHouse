@@ -8,6 +8,7 @@ namespace GreenHouse.WebAdminClient.Pages
     public partial class AddCityPage
     {
         [Inject] private ISnackbar Snackbar { get; set; }
+        List<IBrowserFile> files = new List<IBrowserFile>();
         private string Name { get; set; }
         private string Description { get; set; }
         private string ImagUri { get; set; }
@@ -28,8 +29,8 @@ namespace GreenHouse.WebAdminClient.Pages
 
         private void UploadFiles(IBrowserFile file)
         {
-            
-            //TODO upload the files to the server
+            files.Add(file);
+            GreenHouseClient.UploadAppatrmentPhotos(files, _cts.Token);
         }
 
         protected override async Task OnInitializedAsync()

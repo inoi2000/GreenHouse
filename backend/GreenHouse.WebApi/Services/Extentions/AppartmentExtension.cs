@@ -22,12 +22,6 @@ namespace GreenHouse.WebApi.Services.Extentions
                 };
             }
 
-            var conveniences = new List<int>();
-            foreach (var convenience in appartment.Conveniences)
-            {
-                conveniences.Add((int)convenience);
-            }
-
             var appartmentDto = new AppartmentDto()
             {
                 Id = appartment.Id,
@@ -39,7 +33,6 @@ namespace GreenHouse.WebApi.Services.Extentions
                 Bail = appartment.Bail,
                 Price = appartment.Price,
                 Photos = appartment.Photos,
-                Conveniences = conveniences,
                 Rules = rules,
             };
 
@@ -49,13 +42,6 @@ namespace GreenHouse.WebApi.Services.Extentions
         public static Appartment CreateAppartment(this AppartmentDto appartmentDto)
         {
             if(appartmentDto.Photos == null) throw new ArgumentNullException(nameof(appartmentDto.Photos));
-            if(appartmentDto.Conveniences == null) throw new ArgumentNullException(nameof(appartmentDto.Conveniences));
-
-            var conveniences = new List<Convenience>();
-            foreach (var convenience in appartmentDto.Conveniences)
-            {
-                conveniences.Add((Convenience)convenience);
-            }
 
             var rules = new RulesList();
             if (appartmentDto.Rules != null)
@@ -77,7 +63,6 @@ namespace GreenHouse.WebApi.Services.Extentions
                 Bail = appartmentDto.Bail,
                 Price = appartmentDto.Price,                
                 Photos = appartmentDto.Photos,
-                Conveniences = conveniences,
                 Rules = rules
             };
 
@@ -115,12 +100,6 @@ namespace GreenHouse.WebApi.Services.Extentions
                 };
             }
 
-            var conveniences = new List<int>();
-            foreach (var convenience in appartment.Conveniences)
-            {
-                conveniences.Add((int)convenience);
-            }
-
             var appartmentResponse = new AppartmentResponse()
             {
                 Id = appartment.Id,
@@ -132,7 +111,6 @@ namespace GreenHouse.WebApi.Services.Extentions
                 Bail = appartment.Bail,
                 Price = appartment.Price,
                 Photos = appartment.Photos,
-                Conveniences = conveniences,
                 Rules = rules,
                 Orders = orders
             };
@@ -155,12 +133,6 @@ namespace GreenHouse.WebApi.Services.Extentions
                 };
             }
 
-            var conveniences = new List<int>();
-            foreach (var convenience in appartment.Conveniences)
-            {
-                conveniences.Add((int)convenience);
-            }
-
             var appartmentRequest = new AppartmentRequest()
             {
                 Id = appartment.Id,
@@ -173,23 +145,15 @@ namespace GreenHouse.WebApi.Services.Extentions
                 Bail = appartment.Bail,
                 Price = appartment.Price,
                 Photos = appartment.Photos,
-                Conveniences = conveniences,
                 Rules = rules,
             };
 
             return appartmentRequest;
         }
 
-        public static Appartment CreateAppartment(this AppartmentRequest appartmentRequest)
+        public static Appartment CreateAppartment(this AppartmentRequest appartmentRequest, bool changeId)
         {
             if (appartmentRequest.Photos == null) throw new ArgumentNullException(nameof(appartmentRequest.Photos));
-            if (appartmentRequest.Conveniences == null) throw new ArgumentNullException(nameof(appartmentRequest.Conveniences));
-
-            var conveniences = new List<Convenience>();
-            foreach (var convenience in appartmentRequest.Conveniences)
-            {
-                conveniences.Add((Convenience)convenience);
-            }
 
             var rules = new RulesList();
             if (appartmentRequest.Rules != null)
@@ -200,21 +164,36 @@ namespace GreenHouse.WebApi.Services.Extentions
                 rules.IsPartyAllowed = appartmentRequest.Rules.IsPetsAllowed;
             }
 
-            var appartment = new Appartment()
+
+            Appartment appartment;
+
+            if (changeId)
             {
-                Id = appartmentRequest.Id,
-                CityId = appartmentRequest.CityId,
-                Location = appartmentRequest.Location,
-                NumberOfGuests = appartmentRequest.NumberOfGuests,
-                NumberOfRooms = appartmentRequest.NumberOfRooms,
-                NumberOfSlippingPlaces = appartmentRequest.NumberOfSlippingPlaces,
-                Square = appartmentRequest.Square,
-                Bail = appartmentRequest.Bail,
-                Price = appartmentRequest.Price,
-                Photos = appartmentRequest.Photos,
-                Conveniences = conveniences,
-                Rules = rules
-            };
+                appartment = new Appartment()
+                {
+                    Id = Guid.NewGuid(),
+                    CityId = appartmentRequest.CityId,
+                    Rules = rules
+                };
+            }
+            else
+            {
+                appartment = new Appartment()
+                {
+                    Id = appartmentRequest.Id,
+                    CityId = appartmentRequest.CityId,
+                    Rules = rules
+                };
+            }
+
+            appartment.Location = appartmentRequest.Location;
+            appartment.NumberOfGuests = appartmentRequest.NumberOfGuests;
+            appartment.NumberOfRooms = appartmentRequest.NumberOfRooms;
+            appartment.NumberOfSlippingPlaces = appartmentRequest.NumberOfSlippingPlaces;
+            appartment.Square = appartmentRequest.Square;
+            appartment.Bail = appartmentRequest.Bail;
+            appartment.Price = appartmentRequest.Price;
+            appartment.Photos = appartmentRequest.Photos;
 
             return appartment;
         }
