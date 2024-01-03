@@ -8,7 +8,7 @@
 <MudGrid>
     <MudItem xs="12" sm="7">
         <MudPaper Class="pa-3">
-            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+            <MudForm @ref="form" @bind-IsValid="@success">
                 @if (Cities is not null)
                 {
                     <MudSelect T="string" @bind-Value="SelectedCity" Label="Город" AnchorOrigin="Origin.BottomCenter" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.LocationCity" IconSize="Size.Small" AdornmentColor="Color.Primary" Required="true" RequiredError="Город является обязательным!">

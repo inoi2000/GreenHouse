@@ -112,7 +112,8 @@ namespace GreenHouse.WebApi.Services.Extentions
                 Price = appartment.Price,
                 Photos = appartment.Photos,
                 Rules = rules,
-                Orders = orders
+                Orders = orders,
+                CityId = appartment.CityId,
             };
 
             return appartmentResponse;

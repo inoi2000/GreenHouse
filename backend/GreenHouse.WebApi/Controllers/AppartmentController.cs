@@ -91,7 +91,7 @@ namespace GreenHouse.WebApi.Controllers
         }
 
         [HttpPut("edit_appartment")]
-        public async Task<IResult> EditCity([FromBody] AppartmentRequest request, CancellationToken cancellationToken)
+        public async Task<IResult> EditAppartment([FromBody] AppartmentRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -103,6 +103,13 @@ namespace GreenHouse.WebApi.Controllers
             {
                 return Results.NotFound(request.Id);
             }
+        }
+
+        [HttpDelete("delete_appartment")]
+        public async Task<IResult> DeleteAppartment([FromQuery] Guid Id, CancellationToken cancellationToken)
+        {
+            await _appartmentRepository.Delete(Id, cancellationToken);
+            return Results.Ok();
         }
 
         [HttpPost("upload_file")]

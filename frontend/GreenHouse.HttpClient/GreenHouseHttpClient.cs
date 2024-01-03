@@ -56,7 +56,13 @@ namespace GreenHouse.HttpApiClient
 
         public async Task DeleteCity(Guid Id, CancellationToken cancellationToken)
         {
-            using var response = await _httpClient.DeleteAsync("cities/delete_city?Id={Id}", cancellationToken);
+            using var response = await _httpClient.DeleteAsync($"cities/delete_city?Id={Id}", cancellationToken);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task DeleteAppartment(Guid Id, CancellationToken cancellationToken)
+        {
+            using var response = await _httpClient.DeleteAsync($"appartments/delete_appartment?Id={Id}", cancellationToken);
             response.EnsureSuccessStatusCode();
         }
 
