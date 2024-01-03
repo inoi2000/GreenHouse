@@ -9,7 +9,10 @@
         <MudPaper Class="pa-4">
             <MudForm @ref="form">
                 <MudTextField T="string" Label="Название" Required="true" RequiredError="Название обязательно к заполнению!" @bind-Value="@Name"/>
-                <MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
+                <MudFileUpload T="IBrowserFile" 
+                               FilesChanged="UploadFiles"
+                               Accept=".png, .jpg"
+                               AppendMultipleFiles="false">
                     <ButtonTemplate>
                         <MudFab HtmlTag="label"
                                 Color="Color.Secondary"
@@ -21,7 +24,7 @@
             </MudForm>
         </MudPaper>
         <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => SaveProduct())">Сохранить</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => SaveToServer())">Сохранить</MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(()=>form.Reset())" Class="mx-2">Отчистить</MudButton>
         </MudPaper>
     </MudItem>

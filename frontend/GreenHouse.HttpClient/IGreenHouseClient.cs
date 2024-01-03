@@ -1,6 +1,6 @@
-﻿using GreenHouse.HttpModels.Requests;
+﻿using GreenHouse.HttpModels.DataTransferObjects;
+using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace GreenHouse.HttpApiClient
 {
@@ -12,5 +12,7 @@ namespace GreenHouse.HttpApiClient
         Task AddCity(CityRequest cityRequest, CancellationToken cancellationToken);
         Task DeleteCity(Guid Id, CancellationToken cancellationToken);
         Task AddAppartment(AppartmentRequest appartmentRequest, CancellationToken cancellationToken);
+        Task<IReadOnlyList<string>> UploadAppartmentImages(SaveFile file, CancellationToken cancellationToken);
+        Task<string> UploadCityImage(FileData file, CancellationToken cancellationToken);
     }
 }

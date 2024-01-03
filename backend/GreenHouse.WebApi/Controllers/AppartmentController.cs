@@ -1,5 +1,6 @@
 ﻿using GreenHouse.Domain.Entities;
 using GreenHouse.Domain.Interfaces;
+using GreenHouse.HttpModels.DataTransferObjects;
 using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
 using GreenHouse.WebApi.Services.Extentions;
@@ -19,7 +20,7 @@ namespace GreenHouse.WebApi.Controllers
         }
 
         [HttpGet("get_all_appartments")]
-        public async Task<ActionResult<IReadOnlyList<AppartmentResponse>>> GetAllAppartments([FromQuery] Guid cityId, CancellationToken cancellationToken)
+        public async Task<ActionResult<IReadOnlyList<AppartmentResponse>>> GetAllAppartments(CancellationToken cancellationToken)
         {
             try
             {
@@ -101,6 +102,31 @@ namespace GreenHouse.WebApi.Controllers
             catch (InvalidOperationException)
             {
                 return Results.NotFound(request.Id);
+            }
+        }
+
+        [HttpPost("upload_file")]
+        public async Task<ActionResult<IReadOnlyList<string>>> UploadFile([FromBody] SaveFile saveFile, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var paths = new List<string>();
+                foreach (var file in saveFile.Files)
+                {
+                    string fileExtenstion = file.FileType.ToLower().Contains("png") ? "png" : "jpg";
+                    string tempGuid = Guid.NewGuid().ToString();
+                    string fileName = $@"wwwroot\Images\appartments\{tempGuid}.{fileExtenstion}";
+                    using (var fileStream = System.IO.File.Create(fileName))
+                    {
+                        await fileStream.WriteAsync(file.Data);
+                    }
+                    paths.Add($@"{tempGuid}.{fileExtenstion}");
+                }
+                return paths;
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
             }
         }
     }
