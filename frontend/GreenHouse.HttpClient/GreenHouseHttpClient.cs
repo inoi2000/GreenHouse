@@ -82,11 +82,5 @@ namespace GreenHouse.HttpApiClient
             using var response = await _httpClient.PostAsJsonAsync("appartments/add_appartment", appartmentRequest, cancellationToken);
             response.EnsureSuccessStatusCode();
         }
-
-        public async Task UploadAppatrmentPhotos(List<IBrowserFile> files, CancellationToken cancellationToken)
-        {
-            using var response = await _httpClient.PostAsJsonAsync("appartments/upload_photos", files, cancellationToken);
-            response.EnsureSuccessStatusCode();
-        }
     }
 }

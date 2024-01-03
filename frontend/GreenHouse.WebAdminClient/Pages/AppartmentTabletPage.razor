@@ -6,6 +6,20 @@
 
 <PageTitle>Квартиры</PageTitle>
 
+<style>
+    .selected {
+        background-color: #1E88E5 !important;
+    }
+
+        .selected > td {
+            color: white !important;
+        }
+
+            .selected > td .mud-input {
+                color: white !important;
+            }
+</style>
+
 @if(Appartments is not null)
 {
     <MudTable Items="@Appartments" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
@@ -29,17 +43,28 @@
             <MudTd DataLabel="Площадь">@context.Square</MudTd>
             <MudTd DataLabel="Залог">@context.Bail</MudTd>
             <MudTd DataLabel="Цена">@context.Price</MudTd>
-            <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="(() => RemoveApartment(context))">Показать фото</MudButton></MudTd>
+            <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="(() => selectedItem = context)">Show info</MudButton></MudTd>
             <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="(() => RemoveApartment(context))">Редактировать</MudButton></MudTd>
             <MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="(() => RemoveApartment(context))">Удалить</MudButton></MudTd>
         </RowTemplate>
         <ChildRowContent>
-            <div style="display: flex; margin:5px;">
-                @foreach (var photo in context.Photos)
+           <MudTr>
+                @if (selectedItem == context)
                 {
-                    <MudImage Src=@photo Alt="not found" Elevation="25" Class="rounded-lg" Style="width:100%; height:auto; margin-bottom:10px;" />
-                }
-            </div>
+                    <td colspan="9">
+                        <MudCard Elevation="0">
+                            <MudCardContent>
+                                <div style="display: flex; margin:5px; flex-wrap:wrap">
+                                    @foreach (var photo in context.Photos)
+                                    {
+                                        <MudImage Src=@photo Alt="not found" Elevation="25" Class="rounded-lg" Style="width:auto; height:100px; margin:10px; display:inline-block" />
+                                    }                        
+                                </div>
+                            </MudCardContent>
+                       </MudCard>
+                   </td>
+               }
+           </MudTr>
         </ChildRowContent>
         <PagerContent>
             <MudTablePager />

@@ -12,4 +12,5 @@ namespace GreenHouse.HttpApiClient
         Task AddCity(CityRequest cityRequest, CancellationToken cancellationToken);
         Task DeleteCity(Guid Id, CancellationToken cancellationToken);
         Task AddAppartment(AppartmentRequest appartmentRequest, CancellationToken cancellationToken);
+    }
 }

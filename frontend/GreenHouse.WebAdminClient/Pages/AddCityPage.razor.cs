@@ -30,7 +30,6 @@ namespace GreenHouse.WebAdminClient.Pages
         private void UploadFiles(IBrowserFile file)
         {
             files.Add(file);
-            GreenHouseClient.UploadAppatrmentPhotos(files, _cts.Token);
         }
 
         protected override async Task OnInitializedAsync()

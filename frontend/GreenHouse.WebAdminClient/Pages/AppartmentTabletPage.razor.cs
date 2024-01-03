@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text.RegularExpressions;
+using GreenHouse.HttpModels.DataTransferObjects;
 using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
 using Microsoft.AspNetCore.Components;
@@ -13,8 +14,8 @@ namespace GreenHouse.WebAdminClient.Pages
         [Inject] private ISnackbar Snackbar { get; set; }
 
         private bool _loading = true;
+        private AppartmentResponse selectedItem = null;
         private string searchString1 { get; set; } = String.Empty;
-        private AppartmentResponse selectedItem1 = null;
         private IReadOnlyList<AppartmentResponse>? Appartments { get; set; }
         private HashSet<AppartmentResponse> selectedItems = new HashSet<AppartmentResponse>();
 
