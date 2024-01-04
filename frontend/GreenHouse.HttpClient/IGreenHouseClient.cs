@@ -15,5 +15,10 @@ namespace GreenHouse.HttpApiClient
         Task AddAppartment(AppartmentRequest appartmentRequest, CancellationToken cancellationToken);
         Task<IReadOnlyList<string>> UploadAppartmentImages(SaveFile file, CancellationToken cancellationToken);
         Task<string> UploadCityImage(FileData file, CancellationToken cancellationToken);
+
+        Task<AuthorisationResponse> AuthorisationAsync(AuthorisationRequest request, CancellationToken token);
+        void SetAuthorizationToken(string token);
+        void DeleteAuthorizationToken();
+        Task<AdminResponse> GetCurrentAdmin(CancellationToken token);
     }
 }

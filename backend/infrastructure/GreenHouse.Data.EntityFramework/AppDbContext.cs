@@ -22,6 +22,7 @@ namespace GreenHouse.Data.EntityFramework
 
         }
 
+        public DbSet<Admin> Admins => Set<Admin>();
         public DbSet<Account> Accounts => Set<Account>();
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<City> Cities => Set<City>();

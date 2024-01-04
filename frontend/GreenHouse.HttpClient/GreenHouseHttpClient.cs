@@ -1,6 +1,8 @@
 ﻿using GreenHouse.HttpModels.DataTransferObjects;
 using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
+using System.Net.Http.Headers;
+using System.Net;
 using System.Net.Http.Json;
 
 namespace GreenHouse.HttpApiClient
@@ -104,5 +106,65 @@ namespace GreenHouse.HttpApiClient
             if (res is null) throw new InvalidOperationException();
             else return res;
         }
+
+
+        #region AdminAccountClient
+
+        public async Task<AuthorisationResponse> AuthorisationAsync(AuthorisationRequest request, CancellationToken token)
+        {
+            ArgumentNullException.ThrowIfNull(nameof(request));
+
+            using var response = await _httpClient.PostAsJsonAsync("admin/authorisation", request, token);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.Conflict:
+                        {
+                            var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+                            throw new GreenHouseApiExeption(error!);
+                        }
+                    case HttpStatusCode.BadRequest:
+                        {
+                            var details = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+                            throw new GreenHouseApiExeption(response.StatusCode, details!);
+                        }
+                    default:
+                        throw new GreenHouseApiExeption("Неизвесная ошибка!");
+                }
+            }
+
+            var authorisationResponse = await response.Content.ReadFromJsonAsync<AuthorisationResponse>(cancellationToken: token);
+            SetAuthorizationToken(authorisationResponse?.Token!);
+            return authorisationResponse!;
+        }
+
+        public void SetAuthorizationToken(string token)
+        {
+            var headerValue = new AuthenticationHeaderValue("Bearer", token);
+            _httpClient.DefaultRequestHeaders.Authorization = headerValue;
+        }
+
+        public void DeleteAuthorizationToken()
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+        }
+
+        public async Task<AdminResponse> GetCurrentAdmin(CancellationToken token)
+        {
+            var accountResponse = await _httpClient.GetFromJsonAsync<AdminResponse>("admin/current", token);
+            if (accountResponse != null)
+            {
+                return accountResponse;
+            }
+            else
+            {
+                //TODO Проработать ошибки!!
+                return null;
+            }
+
+        }
+        #endregion
     }
 }
