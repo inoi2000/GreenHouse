@@ -1,28 +1,56 @@
 ﻿@page "/add_city"
 @using System.ComponentModel.DataAnnotations;
+@using GreenHouse.HttpModels.Responses;
 @inherits AppComponentBase
 
-<PageTitle>Counter</PageTitle>
+<PageTitle>Добавление города</PageTitle>
 
 <MudGrid>
-    <MudItem xs="12" sm="7">
-        <MudPaper Class="pa-4">
-            <MudForm @ref="form">
-                <MudTextField T="string" Label="Название" Required="true" RequiredError="Название обязательно к заполнению!" @bind-Value="@Name"/>
-                <MudFileUpload T="IBrowserFile" FilesChanged="UploadFiles">
-                    <ButtonTemplate>
-                        <MudFab HtmlTag="label"
-                                Color="Color.Secondary"
-                                Icon="@Icons.Material.Filled.Image"
-                                Label="Load picture"
-                                for="@context.Id" />
-                    </ButtonTemplate>
-                </MudFileUpload>
+    <MudItem xs="12">
+        <MudPaper Class="pa-2">
+            <MudForm @ref="form" @bind-IsValid="@success">                
+                <MudTextField @bind-Value="Name" T="string" Label="Введите название города" Required="true" RequiredError="Название является обязательным!" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.LocationOn" IconSize="Size.Small" AdornmentColor="Color.Primary" />
             </MudForm>
         </MudPaper>
-        <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(() => SaveProduct())">Сохранить</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(()=>form.Reset())" Class="mx-2">Отчистить</MudButton>
+    </MudItem>
+    <MudItem xs="12">
+        <MudPaper Class="pa-2" Height="150px">
+            <MudStack Style="width: 100%">
+                <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                               Accept=".png, .jpg"
+                               AppendMultipleFiles="false"
+                               OnFilesChanged="OnInputFileChanged"
+                               Hidden="@false"
+                               InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
+                               InputStyle="opacity:0"
+                               MaximumFileCount="1"
+                               @ondragenter="@SetDragClass"
+                               @ondragleave="@ClearDragClass"
+                               @ondragend="@ClearDragClass">
+                    <ButtonTemplate>
+                        <MudPaper Height="100px"
+                                  Outlined="true"
+                                  Class="@_dragClass">
+                            <MudText Typo="Typo.body2">
+                                Перетащите фото сюда или нажмите по области
+                            </MudText>
+                            @if (_file is not null)
+                            {
+                                <MudChip Color="Color.Primary" Text="@_fileName" />
+                            }                           
+                        </MudPaper>
+                        <MudToolBar DisableGutters="true"
+                                    Class="relative d-flex justify-end gap-4 z-30">
+                        </MudToolBar>
+                    </ButtonTemplate>
+                </MudFileUpload>
+            </MudStack>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12">
+        <MudPaper Class="pa-2">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>Save())">Сохранить</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(() => Reset())" Class="mx-2">Отчистить</MudButton>
         </MudPaper>
     </MudItem>
 </MudGrid>

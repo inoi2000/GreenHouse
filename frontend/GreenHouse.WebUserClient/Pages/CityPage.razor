@@ -30,7 +30,7 @@
                                     @foreach(var img in appartment.Photos)
                                     {
                                         <MudCarouselItem Transition="Transition.Slide" Style="width:100%; animation-duration:0.5s;">
-                                            <MudImage Style="height:240px; min-width:375px; width:100%;" Src=@img Alt="not found" Elevation="0" />
+                                            <MudImage Style="height:240px; min-width:375px; width:100%;" Src=@(State.Host + "Images/appartments/" + img) Alt="not found" Elevation="0" />
                                         </MudCarouselItem>
                                     }                                    
                                 </MudCarousel>

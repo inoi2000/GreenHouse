@@ -1,5 +1,6 @@
 ﻿using GreenHouse.Domain.Entities;
 using GreenHouse.Domain.Interfaces;
+using GreenHouse.HttpModels.DataTransferObjects;
 using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
 using GreenHouse.WebApi.Services.Extentions;
@@ -95,6 +96,26 @@ namespace GreenHouse.WebApi.Controllers
                 return Results.NotFound(request.Id);
             }
 
+        }
+
+        [HttpPost("upload_file")]
+        public async Task<ActionResult<string>> UploadFile([FromBody] FileData  file, CancellationToken cancellationToken)
+        {
+            try
+            {
+                string fileExtenstion = file.FileType.ToLower().Contains("png") ? "png" : "jpg";
+                string tempGuid = Guid.NewGuid().ToString();
+                string fileName = $@"wwwroot\Images\cities\{tempGuid}.{fileExtenstion}";
+                using (var fileStream = System.IO.File.Create(fileName))
+                {
+                    await fileStream.WriteAsync(file.Data);
+                }
+                return Ok($@"{tempGuid}.{fileExtenstion}");
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
         }
     }
 }

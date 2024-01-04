@@ -7,8 +7,8 @@
 
 <MudGrid>
     <MudItem xs="12" sm="7">
-        <MudPaper Class="pa-4">
-            <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+        <MudPaper Class="pa-3">
+            <MudForm @ref="form" @bind-IsValid="@success">
                 @if (Cities is not null)
                 {
                     <MudSelect T="string" @bind-Value="SelectedCity" Label="Город" AnchorOrigin="Origin.BottomCenter" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.LocationCity" IconSize="Size.Small" AdornmentColor="Color.Primary" Required="true" RequiredError="Город является обязательным!">
@@ -31,14 +31,55 @@
                 <MudCheckBox @bind-Value="@IsPartyAllowed" T="bool" Label="Разрешены вечерики" Size="Size.Small" Color="Color.Primary"></MudCheckBox>
             </MudForm>   
         </MudPaper>
-        <MudPaper Class="pa-4 mt-4">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>Save())">Сохранить</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(() => Reset())" Class="mx-2">Отчистить</MudButton>
-        </MudPaper>
     </MudItem>
     <MudItem xs="12" sm="5">
-        <MudPaper Class="pa-4 mud-height-full">
-            <MudTextField @bind-Value="PhotoUri" Label="Ссылка на фото" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Photo" AdornmentColor="Color.Primary" />
+        <MudPaper Class="pa-3 mud-height-full">
+            <MudStack Style="width: 100%">
+                <MudFileUpload T="IReadOnlyList<IBrowserFile>"
+                               Accept=".png, .jpg"
+                               AppendMultipleFiles="true"
+                               OnFilesChanged="OnInputFileChanged"
+                               Hidden="@false"
+                               InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20"
+                               InputStyle="opacity:0"
+                               MaximumFileCount="25"
+                               @ondragenter="@SetDragClass"
+                               @ondragleave="@ClearDragClass"
+                               @ondragend="@ClearDragClass">
+                    <ButtonTemplate>
+                        <MudPaper Height="500px"
+                                  Outlined="true"
+                                  Class="@_dragClass">
+                            <MudText Typo="Typo.body2">
+                                Перетащите файлы сюда или нажмите по области
+                            </MudText>
+                            @foreach (var file in _fileNames)
+                            {
+                                <MudChip Color="Color.Primary" Text="@file" />
+                            }
+                        </MudPaper>
+                        <MudToolBar DisableGutters="true"
+                                    Class="relative d-flex justify-end gap-4 z-30">
+                            <MudButton HtmlTag="label"
+                                       Color="Color.Primary"
+                                       for="@context.Id"
+                                       Variant="Variant.Filled">
+                                Выбрать изображения
+                            </MudButton>
+                            <MudButton OnClick="@ClearDrag"
+                                       Color="Color.Error"
+                                       Disabled="@(!_fileNames.Any())"
+                                       Variant="Variant.Filled">
+                                Отчистить
+                            </MudButton>
+                        </MudToolBar>
+                    </ButtonTemplate>
+                </MudFileUpload>
+            </MudStack>
+
+
+
+            @*<MudTextField @bind-Value="PhotoUri" Label="Ссылка на фото" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Photo" AdornmentColor="Color.Primary" />
             <div style="width: 100%; display: flex; justify-content: center; margin-top:10px; margin-bottom:15px;">
                 <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" Style="margin:5px" OnClick="@(()=>AddPhoto(PhotoUri))" />
                 <MudFab Color="Color.Error" StartIcon="@Icons.Material.Filled.Remove" Style="margin:5px" OnClick="@(()=>RemovePhoto())" />
@@ -46,7 +87,13 @@
             @foreach(var photo in Photos)
             {
                 <MudImage Src=@photo Alt="not found" Elevation="25" Class="rounded-lg" Style="width:100%; height:auto; margin-bottom:10px;"/>
-            }
+            }*@
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12">
+        <MudPaper Class="pa-3">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>Save())">Сохранить</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(() => Reset())" Class="mx-2">Отчистить</MudButton>
         </MudPaper>
     </MudItem>
 </MudGrid>

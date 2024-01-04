@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using GreenHouse.HttpModels.DataTransferObjects;
+﻿using GreenHouse.HttpModels.DataTransferObjects;
 using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
 using Microsoft.AspNetCore.Components;
@@ -26,49 +25,49 @@ namespace GreenHouse.WebAdminClient.Pages
         private bool IsSmokingAllowed { get; set; }
         private bool IsPartyAllowed { get; set; }
 
+        private List<FileData> fileData = new List<FileData>();
+        private List<IBrowserFile> browserFiles = new List<IBrowserFile>();
 
-        private List<string> Photos { get; set; } = new List<string>();
-        private string PhotoUri { get; set; } = string.Empty;
-
-
+        private const string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
+        private string _dragClass = DefaultDragClass;
+        private readonly List<string> _fileNames = new();
 
         [Inject] private ISnackbar Snackbar { get; set; }
-        private CityRequest model = new();
 
         bool success;
-        string[] errors = { };
         MudTextField<string> pwField1;
         MudForm form;
 
-        private void AddPhoto(string photo)
-        {
-            Uri uriResult;
-            bool result = Uri.TryCreate(photo, UriKind.Absolute, out uriResult);
-            if (result) 
-            { 
-                Photos.Add(photo);
-                PhotoUri = string.Empty;
-            } 
-            else { Snackbar.Add("Неверный URI адрес", Severity.Error); }
-        }
-
-        private void RemovePhoto()
-        {
-            if(Photos.Count != 0) { Photos.RemoveAt(Photos.Count - 1); }
-            else { Snackbar.Add("Вы не добавили ни одного URI", Severity.Error); }
-        }
-
         private async Task Reset()
         {
-            Photos.Clear();
-            PhotoUri = string.Empty;
+            await ClearDrag();
             await form.ResetAsync();            
         }
 
         private async Task Save()
         {
             await form.Validate();
-            if (success) { 
+            if (!success)
+            {
+                Snackbar.Add("Введите корректные данные", Severity.Error);
+                return;
+            }
+            if (browserFiles.Count <= 0)
+            {
+                Snackbar.Add("Добавте 1 или более фотографий", Severity.Error);
+                return;
+            }
+
+            try
+            {
+                foreach (var file in browserFiles)
+                {
+                    await UploadFiles(file);
+                }
+
+                var payload = new SaveFile { Files = fileData };
+                var names = await GreenHouseClient.UploadAppartmentImages(payload, _cts.Token);
+                
                 var appartmentRequest = new AppartmentRequest()
                 {
                     CityId = Guid.Parse(SelectedCity),
@@ -79,7 +78,7 @@ namespace GreenHouse.WebAdminClient.Pages
                     Square = Square,
                     Bail = Bail,
                     Price = Price,
-                    Photos = Photos,
+                    Photos = new List<string>(names),
                     Rules = new RulesListDto()
                     {
                         IsChildrenAllowed = IsChildrenAllowed,
@@ -90,11 +89,54 @@ namespace GreenHouse.WebAdminClient.Pages
                 };
                 await GreenHouseClient.AddAppartment(appartmentRequest, _cts.Token);
                 Snackbar.Add("Квартира успешно добавлена", Severity.Success);
-            } else
+            }
+            catch(System.IO.IOException ex)
             {
-                Snackbar.Add("Введите корректные данные", Severity.Error);
+                Snackbar.Add("Ошибка, максимальный размер файла не может быть более 512000 байт", Severity.Error);
+            }
+            catch (Exception ex)
+            {
+                Snackbar.Add("Ошибка", Severity.Error);
             }
         }
+
+        private async Task ClearDrag()
+        {
+            _fileNames.Clear();
+            browserFiles.Clear();
+            ClearDragClass();
+            await Task.Delay(100);
+        }
+
+        private void OnInputFileChanged(InputFileChangeEventArgs e)
+        {
+            ClearDragClass();
+            var files = e.GetMultipleFiles();
+            foreach (var file in files)
+            {
+                _fileNames.Add(file.Name);
+               browserFiles.Add(file);
+            }
+        }
+
+        private async Task UploadFiles(IBrowserFile imgFile)
+        {
+            var buffers = new byte[imgFile.Size];
+            await imgFile.OpenReadStream().ReadAsync(buffers);
+            string imageType = imgFile.ContentType;
+            fileData.Add(new FileData
+            {
+                Data = buffers,
+                FileType = imageType,
+                Size = imgFile.Size
+            });
+        }
+
+        private void SetDragClass()
+        => _dragClass = $"{DefaultDragClass} mud-border-primary";
+
+        private void ClearDragClass()
+            => _dragClass = DefaultDragClass;
 
         protected override async Task OnInitializedAsync()
         {
