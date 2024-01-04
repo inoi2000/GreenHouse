@@ -7,14 +7,14 @@
 
 <MudGrid>
     <MudItem xs="12">
-        <MudPaper Class="pa-3">
+        <MudPaper Class="pa-2">
             <MudForm @ref="form" @bind-IsValid="@success">                
                 <MudTextField @bind-Value="Name" T="string" Label="Введите название города" Required="true" RequiredError="Название является обязательным!" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.LocationOn" IconSize="Size.Small" AdornmentColor="Color.Primary" />
             </MudForm>
         </MudPaper>
     </MudItem>
     <MudItem xs="12">
-        <MudPaper Class="pa-3 mud-height-full">
+        <MudPaper Class="pa-2" Height="150px">
             <MudStack Style="width: 100%">
                 <MudFileUpload T="IReadOnlyList<IBrowserFile>"
                                Accept=".png, .jpg"
@@ -28,7 +28,7 @@
                                @ondragleave="@ClearDragClass"
                                @ondragend="@ClearDragClass">
                     <ButtonTemplate>
-                        <MudPaper Height="200px"
+                        <MudPaper Height="100px"
                                   Outlined="true"
                                   Class="@_dragClass">
                             <MudText Typo="Typo.body2">
@@ -48,7 +48,7 @@
         </MudPaper>
     </MudItem>
     <MudItem xs="12">
-        <MudPaper Class="pa-3">
+        <MudPaper Class="pa-2">
             <MudButton Variant="Variant.Filled" Color="Color.Primary" DisableElevation="true" OnClick="@(()=>Save())">Сохранить</MudButton>
             <MudButton Variant="Variant.Filled" Color="Color.Secondary" DisableElevation="true" OnClick="@(() => Reset())" Class="mx-2">Отчистить</MudButton>
         </MudPaper>
