@@ -50,7 +50,7 @@ namespace GreenHouse.WebAdminClient.Pages
                     Snackbar.Add("Авторизация успешно завершена!", Severity.Success);
                     State.LoggedIn = true;
 
-                    NavigationManager.NavigateTo("/catalog");
+                    NavigationManager.NavigateTo("/");
                 }
                 catch (GreenHouseApiExeption e)
                 {

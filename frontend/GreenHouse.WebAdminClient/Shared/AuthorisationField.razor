@@ -3,15 +3,14 @@
 
 @if (AppState.LoggedIn == true)
 {
-    <MudIconButton Icon="@Icons.Material.Filled.ShoppingBasket" Color="Color.Tertiary" Href="cart" Target="_self" />
-    <MudToggleIconButton Href="current" Target="_self">
+    <MudToggleIconButton Href="" Target="_self">
         @if (AppState.Admin != null)
         {
             <MudAvatar Color="Color.Tertiary">@AppState.Admin?.Name[0]</MudAvatar>
         }
         else
         {
-            <MudAvatar Color="Color.Tertiary">U</MudAvatar>
+            <MudAvatar Color="Color.Secondary">U</MudAvatar>
         }
     </MudToggleIconButton>
 

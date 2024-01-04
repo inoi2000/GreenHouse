@@ -21,6 +21,19 @@ namespace GreenHouse.Domain.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        public virtual async Task Register(string login, string password, CancellationToken token)
+        {
+            if (string.IsNullOrWhiteSpace(login)) { throw new ArgumentException($"\"{nameof(login)}\" не может быть пустым или содержать только пробел.", nameof(login)); }
+            if (string.IsNullOrWhiteSpace(password)) { throw new ArgumentException($"\"{nameof(password)}\" не может быть пустым или содержать только пробел.", nameof(password)); }
+
+            var existedAdmin = await _adminRepository.FindAdminByLogin(login, token);
+            if (existedAdmin is not null)
+            {
+                throw new LoginAlreadyExistsExeption();
+            }
+            Admin admin = new Admin(login, EncryptPassword(password));
+            await _adminRepository.Add(admin, token);
+        }
 
         public virtual async Task<Admin> Authorisation(string login, string password, CancellationToken token)
         {

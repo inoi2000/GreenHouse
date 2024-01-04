@@ -4,6 +4,7 @@ using GreenHouse.HttpModels.DataTransferObjects;
 using GreenHouse.HttpModels.Requests;
 using GreenHouse.HttpModels.Responses;
 using GreenHouse.WebApi.Services.Extentions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GreenHouse.WebApi.Controllers
@@ -67,6 +68,7 @@ namespace GreenHouse.WebApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("add_city")]
         public async Task<IResult> AddCity([FromBody] CityRequest request, CancellationToken cancellationToken)
         {
@@ -75,6 +77,7 @@ namespace GreenHouse.WebApi.Controllers
             return Results.Ok();
         }
 
+        [Authorize]
         [HttpDelete("delete_city")]
         public async Task<IResult> DeleteCity([FromQuery] Guid Id, CancellationToken cancellationToken)
         {
@@ -82,6 +85,7 @@ namespace GreenHouse.WebApi.Controllers
             return Results.Ok();
         }
 
+        [Authorize]
         [HttpPut("edit_city")]
         public async Task<IResult> EditCity([FromBody] CityRequest request, CancellationToken token)
         {
@@ -98,6 +102,7 @@ namespace GreenHouse.WebApi.Controllers
 
         }
 
+        [Authorize]
         [HttpPost("upload_file")]
         public async Task<ActionResult<string>> UploadFile([FromBody] FileData  file, CancellationToken cancellationToken)
         {

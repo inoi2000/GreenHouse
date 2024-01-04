@@ -110,6 +110,31 @@ namespace GreenHouse.HttpApiClient
 
         #region AdminAccountClient
 
+        public async Task RegisterAccountAsync(RegisterRequest request, CancellationToken token)
+        {
+            ArgumentNullException.ThrowIfNull(nameof(request));
+
+            using var response = await _httpClient.PostAsJsonAsync("admin/registration", request, token);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Conflict)
+                {
+                    var error = await response.Content.ReadFromJsonAsync<ErrorResponse>();
+                    throw new GreenHouseApiExeption(error!);
+                }
+                else if (response.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    var details = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+                    throw new GreenHouseApiExeption(response.StatusCode, details!);
+                }
+                else
+                {
+                    throw new GreenHouseApiExeption("Неизвесная ошибка!");
+                }
+            }
+        }
+
         public async Task<AuthorisationResponse> AuthorisationAsync(AuthorisationRequest request, CancellationToken token)
         {
             ArgumentNullException.ThrowIfNull(nameof(request));
