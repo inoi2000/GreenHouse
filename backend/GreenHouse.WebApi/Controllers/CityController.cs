@@ -99,7 +99,7 @@ namespace GreenHouse.WebApi.Controllers
         }
 
         [HttpPost("upload_file")]
-        public async Task<ActionResult<string>> UploadCityImage(FileData file, CancellationToken cancellationToken)
+        public async Task<ActionResult<string>> UploadFile([FromBody] FileData  file, CancellationToken cancellationToken)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace GreenHouse.WebApi.Controllers
                 {
                     await fileStream.WriteAsync(file.Data);
                 }
-                return $@"{tempGuid}.{fileExtenstion}";
+                return Ok($@"{tempGuid}.{fileExtenstion}");
             }
             catch (Exception ex)
             {

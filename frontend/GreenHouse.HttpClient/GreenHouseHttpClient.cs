@@ -98,9 +98,9 @@ namespace GreenHouse.HttpApiClient
 
         public async Task<string> UploadCityImage(FileData file, CancellationToken cancellationToken)
         {
-            using var response = await _httpClient.PostAsJsonAsync("appartments/upload_file", file, cancellationToken);
+            using var response = await _httpClient.PostAsJsonAsync("cities/upload_file", file, cancellationToken);
             response.EnsureSuccessStatusCode();
-            var res = await response.Content.ReadFromJsonAsync<string>();
+            var res = await response.Content.ReadAsStringAsync();
             if (res is null) throw new InvalidOperationException();
             else return res;
         }

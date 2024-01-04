@@ -92,7 +92,7 @@ namespace GreenHouse.WebAdminClient.Pages
             }
             catch(System.IO.IOException ex)
             {
-                Snackbar.Add("Ошибка,максимальный размер файла не может быть более 512000 байт", Severity.Error);
+                Snackbar.Add("Ошибка, максимальный размер файла не может быть более 512000 байт", Severity.Error);
             }
             catch (Exception ex)
             {
