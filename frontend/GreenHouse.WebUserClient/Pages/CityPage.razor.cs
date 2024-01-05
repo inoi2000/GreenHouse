@@ -1,4 +1,5 @@
 ﻿ using GreenHouse.HttpModels.Responses;
+using GreenHouse.WebUserClient.Services;
 using GreenHouse.WebUserClient.Shared;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -10,6 +11,12 @@ namespace GreenHouse.WebUserClient.Pages
         [Parameter] public Guid Id { get; set; }
         [Inject] private IDialogService DialogService { get; set; }
         private CityResponse City { get; set; }
+
+        private PaginationService<AppartmentResponse> _paginationService = new PaginationService<AppartmentResponse>();
+        const int APPARTMENT_COUNT_ON_PAGE = 5;
+
+        private int _currentPage = 1;
+        private int _countOfPages = 1;
 
         private void BookedAppartment(AppartmentResponse appartment)
         {
@@ -23,6 +30,7 @@ namespace GreenHouse.WebUserClient.Pages
             //TODO запрос на вытягивание квартир!
             //Appartments = await GreenHouseClient.;
             City = await GreenHouseClient.GetCityByIdAsync(Id, _cts.Token);
+            if (City != null) { _countOfPages = City.Appartments!.Count / APPARTMENT_COUNT_ON_PAGE + 1; }
         }
 
         private string GetCityName()
