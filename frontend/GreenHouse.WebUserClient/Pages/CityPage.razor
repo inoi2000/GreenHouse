@@ -20,8 +20,8 @@
     {
         <MudStack Style="margin-top:30px;" Justify="Justify.Center">
             @if(City.Appartments != null)
-            {            
-                @foreach(var appartment in City.Appartments!)
+            {
+                @foreach (var appartment in _paginationService.Pagination(APPARTMENT_COUNT_ON_PAGE, (_currentPage - 1) * APPARTMENT_COUNT_ON_PAGE, City.Appartments!))
                 {
                     <MudPaper Elevation="2" Width="935px" Class="mx-auto">
                         <MudGrid Spacing="0">
@@ -76,7 +76,7 @@
                         </MudStack>                
                     </MudPaper>
                 }
-                <MudPagination Rectangular="true" Variant="Variant.Filled" Size="Size.Large" Count="4" Class="mx-auto" Style="margin-top:50px;" />
+                <MudPagination @bind-Selected="_currentPage" Rectangular="true" Variant="Variant.Filled" Size="Size.Large" Count="@_countOfPages" Class="mx-auto" Style="margin-top:50px;" />
             }
         </MudStack>
     }    

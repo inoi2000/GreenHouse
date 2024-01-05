@@ -21,6 +21,24 @@ namespace GreenHouse.Data.EntityFramework.Reposirories
         public virtual async Task<IReadOnlyList<TEntity>> GetAll(CancellationToken cancellationToken)
             => await Entities.ToListAsync(cancellationToken);
 
+
+        public virtual async Task<IReadOnlyList<TEntity>> Pagination(int take, int skip, CancellationToken cancellationToken)
+        {
+            if (Entities.Count() > take)
+            {
+                return await Entities.Skip(skip).Take(take).ToListAsync(cancellationToken);
+            }
+            else
+            {
+                return await GetAll(cancellationToken);
+            }
+        }
+
+        public int GetCount()
+        {
+            return Entities.Count();
+        }
+
         public virtual async Task Add(TEntity entity, CancellationToken cancellationToken)
         {
             if (entity is null) { throw new ArgumentNullException(nameof(entity)); }
