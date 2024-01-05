@@ -1,9 +1,15 @@
 using GreenHouse.Data.EntityFramework;
 using GreenHouse.Data.EntityFramework.Reposirories;
 using GreenHouse.Domain.Interfaces;
+using GreenHouse.Domain.Services;
+using GreenHouse.WebApi.Configurations;
 using GreenHouse.WebApi.Services;
+using IdentityPasswordHasherLib;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GreenHouse.WebApi
 {
@@ -22,13 +28,53 @@ namespace GreenHouse.WebApi
 
             builder.Services.AddCors();
 
+            JwtConfig jwtConfig = builder.Configuration.GetRequiredSection("JwtConfig").Get<JwtConfig>()!;
+            if (jwtConfig is null) { throw new InvalidOperationException("JwtConfig is not configured"); }
+            builder.Services.AddSingleton(jwtConfig);
+            builder.Services.AddSingleton<ITokenService, TokenService>();
+
             string connection = builder.Configuration.GetConnectionString("DefaultConnection")!;
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             builder.Services.AddScoped<ICityRepository, CityRepositoryEf>();
             builder.Services.AddScoped<IAppartmentRepository, AppartmentRepositoryEf>();
+            builder.Services.AddScoped<IAdminRepository, AdminRepositoryEf>();
             builder.Services.AddScoped<AccountService>();
+            builder.Services.AddScoped<AdminService>();
+            builder.Services.AddSingleton<IApplicationPasswordHasher, IdentityPasswordHasher>();
+
+            builder.Services.AddHttpLogging(options => //настройка
+            {
+                options.LoggingFields = HttpLoggingFields.RequestHeaders
+                                        | HttpLoggingFields.ResponseHeaders
+                                        | HttpLoggingFields.RequestBody
+                                        | HttpLoggingFields.ResponseBody;
+            });
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(jwtConfig.SigningKeyBytes),
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    RequireExpirationTime = true,
+                    RequireSignedTokens = true,
+
+                    ValidateAudience = true,
+                    ValidateIssuer = true,
+                    ValidAudiences = new[] { jwtConfig.Audience },
+                    ValidIssuer = jwtConfig.Issuer
+                };
+            });
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
@@ -43,6 +89,7 @@ namespace GreenHouse.WebApi
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors(policy =>

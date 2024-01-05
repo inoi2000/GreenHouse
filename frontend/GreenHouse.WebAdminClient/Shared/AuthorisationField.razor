@@ -1,0 +1,38 @@
+﻿@inject AppState AppState
+@implements IDisposable
+
+@if (AppState.LoggedIn == true)
+{
+    <MudToggleIconButton Href="" Target="_self">
+        @if (AppState.Admin != null)
+        {
+            <MudAvatar Color="Color.Tertiary">@AppState.Admin?.Name[0]</MudAvatar>
+        }
+        else
+        {
+            <MudAvatar Color="Color.Secondary">U</MudAvatar>
+        }
+    </MudToggleIconButton>
+
+}
+else
+{
+    <MudButton Href="authorisation" Target="_self" class="d-flex mud-theme-secondary py-1 px-1 mx-1 rounded-pill">
+        <MudAvatar Color="Color.Primary" Variant="Variant.Outlined">
+            <MudIcon Icon="@Icons.Material.Filled.Person" />
+        </MudAvatar>
+        <MudText Align="Align.Center" class="my-auto px-2 mx-1">Войти</MudText>
+    </MudButton>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        AppState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AppState.OnChange -= StateHasChanged;
+    }
+}

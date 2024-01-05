@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using GreenHouse.HttpApiClient;
 using GreenHouse.WebAdminClient;
 using Microsoft.AspNetCore.Components.Web;
@@ -27,5 +28,9 @@ builder.Services.AddMudServices(config =>
 string host = "https://localhost:7273/";
 builder.Services.AddSingleton<IGreenHouseClient>(new GreenHouseHttpClient(host: host));
 builder.Services.AddSingleton<AppState>(new AppState(host));
+
+builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddBlazoredLocalStorage(config => config.JsonSerializerOptions.WriteIndented = true);
 
 await builder.Build().RunAsync();
