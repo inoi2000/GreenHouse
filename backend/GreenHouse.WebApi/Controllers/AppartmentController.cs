@@ -127,7 +127,7 @@ namespace GreenHouse.WebApi.Controllers
                 {
                     string fileExtenstion = file.FileType.ToLower().Contains("png") ? "png" : "jpg";
                     string tempGuid = Guid.NewGuid().ToString();
-                    string fileName = $@"wwwroot\Images\appartments\{tempGuid}.{fileExtenstion}";
+                    string fileName = $@"wwwroot/Images/appartments/{tempGuid}.{fileExtenstion}";
                     using (var fileStream = System.IO.File.Create(fileName))
                     {
                         await fileStream.WriteAsync(file.Data);

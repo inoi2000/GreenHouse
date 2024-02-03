@@ -24,7 +24,7 @@ builder.Services.AddMudServices(config =>
     config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
 });
 
-string host = "https://localhost:7273/";
+string host = builder.Configuration.GetConnectionString("HostUri")!;
 builder.Services.AddSingleton<IGreenHouseClient>(new GreenHouseHttpClient(host: host));
 builder.Services.AddSingleton<AppState>(new AppState(host));
 
