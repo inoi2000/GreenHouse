@@ -33,7 +33,7 @@ namespace GreenHouse.WebApi
             builder.Services.AddSingleton(jwtConfig);
             builder.Services.AddSingleton<ITokenService, TokenService>();
 
-            string connection = builder.Configuration.GetConnectionString("DefaultConnection")!;
+            string connection = builder.Configuration.GetConnectionString("DB_40CA8")!;
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -87,7 +87,7 @@ namespace GreenHouse.WebApi
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -102,7 +102,7 @@ namespace GreenHouse.WebApi
 
             app.UseDirectoryBrowser(new DirectoryBrowserOptions()
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images")),
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot/Images")),
 
                 RequestPath = new PathString("/Images")
             });

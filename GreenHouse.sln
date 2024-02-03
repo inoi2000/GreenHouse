@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.HttpApiClient", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.WebAdminClient", "frontend\GreenHouse.WebAdminClient\GreenHouse.WebAdminClient.csproj", "{CFB0E434-56CC-44E7-A585-AA1A07243009}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.AdminWebHosting", "backend\GreenHouse.AdminWebHosting\GreenHouse.AdminWebHosting.csproj", "{2E0C0B5E-6B4E-4C8A-9679-02F6DDE75728}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.UserWebHosting", "backend\GreenHouse.UserWebHosting\GreenHouse.UserWebHosting.csproj", "{E5000058-88A5-4A5F-8052-C1A441C79C41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,14 @@ Global
 		{CFB0E434-56CC-44E7-A585-AA1A07243009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFB0E434-56CC-44E7-A585-AA1A07243009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFB0E434-56CC-44E7-A585-AA1A07243009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E0C0B5E-6B4E-4C8A-9679-02F6DDE75728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E0C0B5E-6B4E-4C8A-9679-02F6DDE75728}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E0C0B5E-6B4E-4C8A-9679-02F6DDE75728}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E0C0B5E-6B4E-4C8A-9679-02F6DDE75728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5000058-88A5-4A5F-8052-C1A441C79C41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5000058-88A5-4A5F-8052-C1A441C79C41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5000058-88A5-4A5F-8052-C1A441C79C41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5000058-88A5-4A5F-8052-C1A441C79C41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +91,8 @@ Global
 		{CF37D76A-5484-4689-AA80-F2D3CE5E84E9} = {D5C94A3D-05F4-4B7E-8092-F9EE98ADF7B7}
 		{F0EBE8FF-81FA-4850-8182-B56EB6D8DFD8} = {D5C94A3D-05F4-4B7E-8092-F9EE98ADF7B7}
 		{CFB0E434-56CC-44E7-A585-AA1A07243009} = {D5C94A3D-05F4-4B7E-8092-F9EE98ADF7B7}
+		{2E0C0B5E-6B4E-4C8A-9679-02F6DDE75728} = {513007D8-39E9-4DA5-863F-FDE408C69D18}
+		{E5000058-88A5-4A5F-8052-C1A441C79C41} = {513007D8-39E9-4DA5-863F-FDE408C69D18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {796FD543-3E22-44FD-827F-517C0E4D5FE5}

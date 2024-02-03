@@ -2,9 +2,9 @@
     <DialogContent>
         <MudStack Style="margin:3px;">
             <MudText>Подберем лучшее предложение</MudText>
-            <MudTextField @bind-Value="HelperText" Label="Имя" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Person" AdornmentColor="Color.Primary" />
-            <MudTextField @bind-Value="HelperText" Label="Телефон" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Phone" AdornmentColor="Color.Primary" />
-            <MudTextField T="string" @bind-Value="HelperText" Label="Пожелания" HelperText="*Необязательное поле" Variant="Variant.Filled" Lines="5" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Edit" AdornmentColor="Color.Primary" />
+            <MudTextField @bind-Value="Name" Label="Имя" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Person" AdornmentColor="Color.Primary" />
+            <MudTextField @bind-Value="Phone" Label="Телефон" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Phone" AdornmentColor="Color.Primary" />
+            <MudTextField T="string" @bind-Value="Wishes" Label="Пожелания" HelperText="*Необязательное поле" Variant="Variant.Filled" Lines="5" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Edit" AdornmentColor="Color.Primary" />
         </MudStack>
     </DialogContent>
     <DialogActions>
@@ -16,7 +16,9 @@
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
     [Inject] private ISnackbar Snackbar { get; set; }
 
-    public string HelperText { get; set; }
+    public string Name { get; set; }
+    public string Phone { get; set; }
+    public string Wishes { get; set; }
 
     void Submit() {
         Snackbar.Add("Ваш запрос успешно отправлен", Severity.Success);
