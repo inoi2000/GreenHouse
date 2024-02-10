@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.HttpApiClient", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.WebAdminClient", "frontend\GreenHouse.WebAdminClient\GreenHouse.WebAdminClient.csproj", "{CFB0E434-56CC-44E7-A585-AA1A07243009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.AdminWebHosting", "backend\GreenHouse.AdminWebHosting\GreenHouse.AdminWebHosting.csproj", "{2E0C0B5E-6B4E-4C8A-9679-02F6DDE75728}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.AdminWebHosting", "backend\GreenHouse.AdminWebHosting\GreenHouse.AdminWebHosting.csproj", "{2E0C0B5E-6B4E-4C8A-9679-02F6DDE75728}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.UserWebHosting", "backend\GreenHouse.UserWebHosting\GreenHouse.UserWebHosting.csproj", "{E5000058-88A5-4A5F-8052-C1A441C79C41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GreenHouse.UserWebHosting", "backend\GreenHouse.UserWebHosting\GreenHouse.UserWebHosting.csproj", "{E5000058-88A5-4A5F-8052-C1A441C79C41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
